@@ -110,8 +110,9 @@ label_counter = 0
 variable_counter = 0
 label_dict = {} #this label is for storing the address of the labels
 variable_dict = {} #this label is for storing the address of the variables
-#instruction 
-#register
+instructions=["add","sub","mov","ld","st","mul","div","rs","ls","xor","or","and","not","cmp","jmp","jlt","jgt","je","hlt"]
+register=["reg0","reg1","reg2","reg3","reg4","reg5","reg6"]
+ 
 while(y<=256):
 
     while(x[0] == "var"):
@@ -126,81 +127,112 @@ while(y<=256):
         print("instruction not found")
 
     else if(x[0]=="add"):
-        final=Addition(x[1],x[2],x[3])
+        if(len(x)<4):
+            print("Wrong type")
+            break
+
+        else if(x[1] not in register or x[2] not in register  or x[3] not in register):
+            print ("Register not found")
+            break
+        else:
+            final=Addition(x[1],x[2],x[3])
         
     else if(x[0]=="sub"):
-        final=Subtraction(x[1],x[2],x[3])
+        if(len(x)<4):
+            print("Wrong type")
+            break
+        else if(x[1] not in register or x[2] not in register  or x[3] not in register):
+            print ("Register not found")
+            break
+        else:
+            final=Subtraction(x[1],x[2],x[3])
     
     else if(x[0]=="mov"):
-        if(x[2][0:1]=="$"):
-            final=mov_imm(x[1],int(x[2][1:]))
+        if(len(x)<3):
+             print("Wrong type")
+             break
+
+        else if(x[2][0:1]=="$"):
+            if(int(x[2][1:])>255 or int(x[2][1:])<0):
+                print("Illegal Immediate value")
+            else if(x[1] not in register):
+                print ("Register not found")
+            else:
+                final=mov_imm(x[1],int(x[2][1:]))
         else:
-            final=moveRegister(x[1],x[2])
+            if (x[1] not in register or x[2] not in registor):
+                print ("Register not found")
+            else:
+                final=moveRegister(x[1],x[2])
             
-    else if(x[0]=="load"):
-        final=load(x[1],x[2])
+    else if(x[0]=="ld"):
+        if(len(x)<3):
+             print("Wrong type")
+             break
+
+        else if(x[1] not in register or x[2] not in variable_dict.keys()):
+            print("Use of undefined variables")  
+            break
+        else if(x[2] in label_dict):
+            print("Misuse of variables as labels") 
+            break
+        else:
+
+            final=load(x[1],x[2])
         
     else if(x[0]=="st"):
-        final=store(x[1],x[2])
+        if(len(x)<3):
+             print("Wrong type")
+             break
+        else  if(x[1] not in register or x[2] not in variable_dict.keys()):
+            print("Use of undefined variables")  
+            break
+        else if(x[2] in label_dict):
+            print("Misuse of variables as labels") 
+            break
+        else:
+            final=store(x[1],x[2])
         
     else if(x[0]=="mul"):
         final=Multiplication(x[1],x[2],x[3])
         
-    else if(x[0]=="div"):
+    if(x[0]=="div"):
         final=divide(x[1],x[2])
         
-    else if(x[0]=="rs"):
+    if(x[0]=="rs"):
         final=right_shift(x[1],int(x[2][1:]))
         
-    else if(x[0]=="ls"):
+    if(x[0]=="ls"):
         final=left_shift(x[1],int(x[2][1:]))
         
-    else if(x[0]=="xor"):
+    if(x[0]=="xor"):
         final=Exclusive_OR(x[1],x[2],x[3])
         
-    else if(x[0]=="or"):
+    if(x[0]=="or"):
         final=OR(x[1],x[2],x[3])
         
-    else if(x[0]=="and"):
+    if(x[0]=="and"):
         final=AND(x[1],x[2],x[3])
         
-    else if(x[0]=="not"):
+    if(x[0]=="not"):
         final=invert(x[1],x[2])
         
-    else if(x[0]=="cmp"):
+    if(x[0]=="cmp"):
         final=compare(x[1],x[2])
         
-    else if(x[0]=="jmp"):
-        if(type(x[1]) == int):    
-            final=UnconditionalJump(x[1])
-        else if(type(x[1]) == str):
-            parameter = label_dict[x[1]]
-            final = UnconditionalJump(parameter)
+    if(x[0]=="jmp"):
+        final=UnconditionalJump(x[1])
         
-    else if(x[0]=="jlt"):
-        if(type(x[1]) == int):    
-            final = JumpIfLessThan(x[1])
-        else if(type(x[1]) == str):
-            parameter = label_dict[x[1]]
-            final = JumpIfLessThan(parameter)
+    if(x[0]=="jlt"):
+        final=JumpIfLessThan(x[1])
         
-    else if(x[0]=="jgt"):
-        if(type(x[1]) == int):    
-            final = JumpIfGreaterThan(x[1])
-        else if(type(x[1]) == str):
-            parameter = label_dict[x[1]]
-            final = JumpIfGreaterThan(parameter)
-
+    if(x[0]=="jgt"):
+        final=JumpIfGreaterThan(x[1])
         
-    else if(x[0]=="je"):
-        if(type(x[1]) == int):    
-            final = JumpIfEqualTo(x[1])
-        else if(type(x[1]) == str):
-            parameter = label_dict[x[1]]
-            final = JumpIfEqualTo(parameter)
-
+    if(x[0]=="je"):
+        final=JumpIfEqualTo(x[1])
         
-    else if(x[0]=="hlt"):
+    if(x[0]=="hlt"):
         final=Halt()
         print(final)
         break
