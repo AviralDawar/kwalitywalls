@@ -111,7 +111,7 @@ variable_counter = 0
 label_dict = {} #this label is for storing the address of the labels
 variable_dict = {} #this label is for storing the address of the variables
 #instruction 
-#register 
+#register
 while(y<=256):
 
     while(x[0] == "var"):
@@ -146,45 +146,45 @@ while(y<=256):
     else if(x[0]=="mul"):
         final=Multiplication(x[1],x[2],x[3])
         
-    if(x[0]=="div"):
+    else if(x[0]=="div"):
         final=divide(x[1],x[2])
         
-    if(x[0]=="rs"):
+    else if(x[0]=="rs"):
         final=right_shift(x[1],int(x[2][1:]))
         
-    if(x[0]=="ls"):
+    else if(x[0]=="ls"):
         final=left_shift(x[1],int(x[2][1:]))
         
-    if(x[0]=="xor"):
+    else if(x[0]=="xor"):
         final=Exclusive_OR(x[1],x[2],x[3])
         
-    if(x[0]=="or"):
+    else if(x[0]=="or"):
         final=OR(x[1],x[2],x[3])
         
-    if(x[0]=="and"):
+    else if(x[0]=="and"):
         final=AND(x[1],x[2],x[3])
         
-    if(x[0]=="not"):
+    else if(x[0]=="not"):
         final=invert(x[1],x[2])
         
-    if(x[0]=="cmp"):
+    else if(x[0]=="cmp"):
         final=compare(x[1],x[2])
         
-    if(x[0]=="jmp"):
+    else if(x[0]=="jmp"):
         if(type(x[1]) == int):    
             final=UnconditionalJump(x[1])
         else if(type(x[1]) == str):
             parameter = label_dict[x[1]]
             final = UnconditionalJump(parameter)
         
-    if(x[0]=="jlt"):
+    else if(x[0]=="jlt"):
         if(type(x[1]) == int):    
             final = JumpIfLessThan(x[1])
         else if(type(x[1]) == str):
             parameter = label_dict[x[1]]
             final = JumpIfLessThan(parameter)
         
-    if(x[0]=="jgt"):
+    else if(x[0]=="jgt"):
         if(type(x[1]) == int):    
             final = JumpIfGreaterThan(x[1])
         else if(type(x[1]) == str):
@@ -192,7 +192,7 @@ while(y<=256):
             final = JumpIfGreaterThan(parameter)
 
         
-    if(x[0]=="je"):
+    else if(x[0]=="je"):
         if(type(x[1]) == int):    
             final = JumpIfEqualTo(x[1])
         else if(type(x[1]) == str):
@@ -200,7 +200,7 @@ while(y<=256):
             final = JumpIfEqualTo(parameter)
 
         
-    if(x[0]=="hlt"):
+    else if(x[0]=="hlt"):
         final=Halt()
         print(final)
         break
