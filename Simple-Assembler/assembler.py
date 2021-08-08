@@ -41,4 +41,51 @@ def Halt():
     return(s)
 
 
+# FOR ALL THE TYPE C INTRUCTIONS
+
+#for moving values of reg2 to reg1--
+def moveRegister(reg1 , reg2):
+    print("00011" + "00000" + registers.reg1 + registers.reg2)
+
+#for dividing the register values--
+def divide(reg3,reg4):
+    print("00111" + "00000" + registers.reg3 + registers.reg4)
+
+#for bitwise NOT operation--
+def invert(reg1 , reg2):
+    print("01101" + "00000" + registers.reg1 + registers.reg2)
+
+#for comparing the register values--
+def compare(reg1 , reg2):
+    print("01110" + "00000" + registers.reg1 + registers.reg2)
+
+#FOR ALL THE TYPE D INTRUCTIONS
+
+#for loading data from memory address to register value--
+def load(reg1 , mem_addr):
+    print("00100" + registers.reg1 + mem_addr)
+
+#for storing data from reg1 to mem_addr--
+def store(reg1 , mem_addr):
+    print("00101" + registers.reg1 + mem_addr)
+
+#FOR ALL THE TYPE E INTRUCTIONS
+
+#for jumping to a memory address
+def UnconditionalJump(mem_addr):
+    print("01111" + "000" + mem_addr)
+
+#for jumping if greater than flag = 1
+def JumpIfGreaterThan(mem_addr):
+    print("10001" + "000" + mem_addr)
+
+#for jumping if less than flag = 1
+def JumpIfLessThan(mem_addr):
+    print("10000" + "000" + mem_addr)
+
+#for jumping if equal to  flag = 1
+def JumpIfEqualTo(mem_addr):
+    print("10010" + "000" + mem_addr)
+
+
 
