@@ -120,11 +120,13 @@ while(y<=256):
             break
         variable_dict[x[1]] = format(variable_counter, '08b')
         variable_counter+=1
+        y=-1
         x=input().split()
     
     if(x[0][-1:]==":"):
         label_dict[x[0][:-1]] = format(label_counter, '08b')
         label_counter+=1
+        y=y-1
     
     elif(x[0] not in instructions):
         print("instruction not found")
