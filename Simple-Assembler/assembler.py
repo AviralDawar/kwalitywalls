@@ -104,49 +104,46 @@ def Halt():
     return(s)
 
 
-#for storing the address of the labels
-x = input().split()
+x=input().split()
+y=1
 label_counter = 0
 variable_counter = 0
 label_dict = {} #this label is for storing the address of the labels
 variable_dict = {} #this label is for storing the address of the variables
+#instruction 
+#register 
+while(y<=256):
 
-#while loop for making the variable dictionary
-while(x[0] == "var"):
-    variable_dict[x[1]] = format(variable_counter, '08b')
-    variable_counter+=1
-    x = input().split()
-
-#while loop for making the label dictionary
-while (x[0]!="hlt"):
+    while(x[0] == "var"):
+        variable_dict[x[1]] = format(variable_counter, '08b')
+        variable_counter+=1
+    
     if(x[0][-1:]==":"):
         label_dict[x[0][:-1]] = format(label_counter, '08b')
-    label_counter+=1
-    x = input().split()
+        label_counter+=1
+    
+    else if(x[0] not in instructions):
+        print("instruction not found")
 
-
-x=input().split()
-y=1
-while(y<=256):
-    if(x[0]=="add"):
+    else if(x[0]=="add"):
         final=Addition(x[1],x[2],x[3])
         
-    if(x[0]=="sub"):
+    else if(x[0]=="sub"):
         final=Subtraction(x[1],x[2],x[3])
     
-    if(x[0]=="mov"):
+    else if(x[0]=="mov"):
         if(x[2][0:1]=="$"):
             final=mov_imm(x[1],int(x[2][1:]))
         else:
             final=moveRegister(x[1],x[2])
             
-    if(x[0]=="load"):
+    else if(x[0]=="load"):
         final=load(x[1],x[2])
         
-    if(x[0]=="st"):
+    else if(x[0]=="st"):
         final=store(x[1],x[2])
         
-    if(x[0]=="mul"):
+    else if(x[0]=="mul"):
         final=Multiplication(x[1],x[2],x[3])
         
     if(x[0]=="div"):
