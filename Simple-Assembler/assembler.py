@@ -1,4 +1,3 @@
-
 reg={'R0':'000','R1':'001','R2':'010','R3':'011','R4':'100','R5':'101','R6':'110'}
 
 def Addition(rega,regb,regc):
@@ -116,46 +115,52 @@ register=["reg0","reg1","reg2","reg3","reg4","reg5","reg6"]
 while(y<=256):
 
     while(x[0] == "var"):
+        if(len(x)!=2):
+            print("Wrong type")
+            break
         variable_dict[x[1]] = format(variable_counter, '08b')
         variable_counter+=1
+        x=input().split()
     
     if(x[0][-1:]==":"):
         label_dict[x[0][:-1]] = format(label_counter, '08b')
         label_counter+=1
     
-    else if(x[0] not in instructions):
+    elif(x[0] not in instructions):
         print("instruction not found")
+        break
 
-    else if(x[0]=="add"):
+    elif(x[0]=="add"):
         if(len(x)<4):
             print("Wrong type")
             break
 
-        else if(x[1] not in register or x[2] not in register  or x[3] not in register):
+        elif(x[1] not in register or x[2] not in register  or x[3] not in register):
             print ("Register not found")
             break
         else:
             final=Addition(x[1],x[2],x[3])
         
-    else if(x[0]=="sub"):
+    elif(x[0]=="sub"):
         if(len(x)<4):
             print("Wrong type")
             break
-        else if(x[1] not in register or x[2] not in register  or x[3] not in register):
+        elif(x[1] not in register or x[2] not in register  or x[3] not in register):
             print ("Register not found")
             break
         else:
             final=Subtraction(x[1],x[2],x[3])
     
-    else if(x[0]=="mov"):
+    elif(x[0]=="mov"):
+        
         if(len(x)<3):
-             print("Wrong type")
-             break
+            print("Wrong type")
+            break
 
-        else if(x[2][0:1]=="$"):
+        elif(x[2][0:1]=="$"):
             if(int(x[2][1:])>255 or int(x[2][1:])<0):
                 print("Illegal Immediate value")
-            else if(x[1] not in register):
+            elif(x[1] not in register):
                 print ("Register not found")
             else:
                 final=mov_imm(x[1],int(x[2][1:]))
@@ -165,35 +170,34 @@ while(y<=256):
             else:
                 final=moveRegister(x[1],x[2])
             
-    else if(x[0]=="ld"):
+    elif(x[0]=="ld"):
         if(len(x)<3):
-             print("Wrong type")
-             break
-
-        else if(x[1] not in register or x[2] not in variable_dict.keys()):
+            print("Wrong type")
+            break
+        elif(x[1] not in register or x[2] not in variable_dict.keys()):
             print("Use of undefined variables")  
             break
-        else if(x[2] in label_dict):
+        elif(x[2] in label_dict):
             print("Misuse of variables as labels") 
             break
         else:
 
             final=load(x[1],x[2])
         
-    else if(x[0]=="st"):
+    elif(x[0]=="st"):
         if(len(x)<3):
-             print("Wrong type")
-             break
-        else  if(x[1] not in register or x[2] not in variable_dict.keys()):
+            print("Wrong type")
+            break
+        elif(x[1] not in register or x[2] not in variable_dict.keys()):
             print("Use of undefined variables")  
             break
-        else if(x[2] in label_dict):
+        elif(x[2] in label_dict):
             print("Misuse of variables as labels") 
             break
         else:
             final=store(x[1],x[2])
         
-    else if(x[0]=="mul"):
+    elif(x[0]=="mul"):
         final=Multiplication(x[1],x[2],x[3])
         
     if(x[0]=="div"):
@@ -206,31 +210,120 @@ while(y<=256):
         final=left_shift(x[1],int(x[2][1:]))
         
     if(x[0]=="xor"):
-        final=Exclusive_OR(x[1],x[2],x[3])
+        if(len(x)!=4):
+            print("Wrong type")
+            break
+
+        elif(x[1] not in register or x[2] not in register  or x[3] not in register):
+            print ("Register not found")
+            break
+        else:
+            final=Exclusive_OR(x[1],x[2],x[3])
         
     if(x[0]=="or"):
-        final=OR(x[1],x[2],x[3])
+        if(len(x)!=4):
+            print("Wrong type")
+            break
+
+        elif(x[1] not in register or x[2] not in register  or x[3] not in register):
+            print ("Register not found")
+            break
+        else:
+            final=OR(x[1],x[2],x[3])
         
     if(x[0]=="and"):
-        final=AND(x[1],x[2],x[3])
+        if(len(x)!=4):
+            print("Wrong type")
+            break
+
+        elif(x[1] not in register or x[2] not in register  or x[3] not in register):
+            print ("Register not found")
+            break
+        else:
+            final=AND(x[1],x[2],x[3])
         
     if(x[0]=="not"):
-        final=invert(x[1],x[2])
+        if(len(x)!=3):
+            print("Wrong type")
+            break
+
+        elif(x[1] not in register or x[2] not in register):
+            print ("Register not found")
+            break
+        else:
+            final=invert(x[1],x[2])
         
     if(x[0]=="cmp"):
-        final=compare(x[1],x[2])
+        if(len(x)!=3):
+            print("Wrong type")
+            break
+
+        elif(x[1] not in register or x[2] not in register):
+            print ("Register not found")
+            break
+        else:
+            final=compare(x[1],x[2])
         
     if(x[0]=="jmp"):
-        final=UnconditionalJump(x[1])
+        if(len(x)!=2):
+            print("Wrong type")
+            break
+
+        elif(x[1] not in label_dict.keys()):
+            print("Use of undefined label")  
+            break
+
+        elif(x[2] in variable_dict.keys()):
+            print("Misuse of labels as variable") 
+            break
+        else:
+            final=UnconditionalJump(x[1])
+
         
     if(x[0]=="jlt"):
-        final=JumpIfLessThan(x[1])
+        if(len(x)!=2):
+            print("Wrong type")
+            break
+
+        elif(x[1] not in label_dict.keys()):
+            print("Use of undefined label")  
+            break
+
+        elif(x[2] in variable_dict.keys()):
+            print("Misuse of labels as variable") 
+            break
+        else:
+            final=JumpIfLessThan(x[1])
         
     if(x[0]=="jgt"):
-        final=JumpIfGreaterThan(x[1])
+        if(len(x)!=2):
+            print("Wrong type")
+            break
+
+        elif(x[1] not in label_dict.keys()):
+            print("Use of undefined label")  
+            break
+
+        elif(x[2] in variable_dict.keys()):
+            print("Misuse of labels as variable") 
+            break
+        else:
+            final=JumpIfGreaterThan(x[1])
         
     if(x[0]=="je"):
-        final=JumpIfEqualTo(x[1])
+        if(len(x)!=2):
+            print("Wrong type")
+            break
+
+        elif(x[1] not in label_dict.keys()):
+            print("Use of undefined label")  
+            break
+
+        elif(x[2] in variable_dict.keys()):
+            print("Misuse of labels as variable") 
+            break
+        else:
+            final=JumpIfEqualTo(x[1])
         
     if(x[0]=="hlt"):
         final=Halt()
@@ -240,5 +333,3 @@ while(y<=256):
     print(final)
     x=input().split()
     y+=1
-
-            
