@@ -87,5 +87,31 @@ def JumpIfLessThan(mem_addr):
 def JumpIfEqualTo(mem_addr):
     print("10010" + "000" + mem_addr)
 
+def mov_imm(registor,val):
+    s=""
+    s+="00010"
+    s+=Dict[registor]
+   # if val>255 error
+        
+    bin_ans=format(val, '08b')
+    s+=bin_ans
+    print(s)
+    
+mov_imm(registor,val)
 
+def right_shift(registor,val):
+    s=""
+    s+="01000"
+    s+=Dict[registor]
+    bin_ans=format(val, '08b')
+    s+=bin_ans
+    print(s)
+
+def left_shift(registor,val):
+    s=""
+    s+="01000"
+    s+=Dict[registor]
+    bin_ans=format(val, '08b')
+    s+=bin_ans
+    print(s)    
 
