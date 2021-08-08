@@ -171,16 +171,34 @@ while(y<=256):
         final=compare(x[1],x[2])
         
     if(x[0]=="jmp"):
-        final=UnconditionalJump(x[1])
+        if(type(x[1]) == int):    
+            final=UnconditionalJump(x[1])
+        else if(type(x[1]) == str):
+            parameter = label_dict[x[1]]
+            final = UnconditionalJump(parameter)
         
     if(x[0]=="jlt"):
-        final=JumpIfLessThan(x[1])
+        if(type(x[1]) == int):    
+            final = JumpIfLessThan(x[1])
+        else if(type(x[1]) == str):
+            parameter = label_dict[x[1]]
+            final = JumpIfLessThan(parameter)
         
     if(x[0]=="jgt"):
-        final=JumpIfGreaterThan(x[1])
+        if(type(x[1]) == int):    
+            final = JumpIfGreaterThan(x[1])
+        else if(type(x[1]) == str):
+            parameter = label_dict[x[1]]
+            final = JumpIfGreaterThan(parameter)
+
         
     if(x[0]=="je"):
-        final=JumpIfEqualTo(x[1])
+        if(type(x[1]) == int):    
+            final = JumpIfEqualTo(x[1])
+        else if(type(x[1]) == str):
+            parameter = label_dict[x[1]]
+            final = JumpIfEqualTo(parameter)
+
         
     if(x[0]=="hlt"):
         final=Halt()
