@@ -104,6 +104,22 @@ def Halt():
     return(s)
 
 
+#for storing the address of the labels
+x = input().split()
+int counter = 0
+label_dict = {} #this label is for storing the address of the labels
+variable_dict = {} #this label is for storing the address of the variables
+while (x[0]!=hlt):
+    if(x[0][x[0].length-1]==":"):
+        label_dict[x[0][0:x[0].length-1]] = format(counter, '08b')
+    x = input().split()
+    counter+=1
+    if(x[0] == "var"):
+        variable_dict[x[0]] = 0
+        counter = 0
+    
+for i in range(0,len(variable_dict)):
+    variable_dict[i] = format(counter+i, '08b') #can we use this as a list??
 
 
 x=input().split()
@@ -174,4 +190,5 @@ while(y<=256):
     print(final)
     x=input().split()
     y+=1
+
             
