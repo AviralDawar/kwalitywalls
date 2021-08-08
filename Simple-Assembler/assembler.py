@@ -106,20 +106,23 @@ def Halt():
 
 #for storing the address of the labels
 x = input().split()
-int counter = 0
+label_counter = 0
+variable_counter = 0
 label_dict = {} #this label is for storing the address of the labels
 variable_dict = {} #this label is for storing the address of the variables
-while (x[0]!=hlt):
-    if(x[0][x[0].length-1]==":"):
-        label_dict[x[0][0:x[0].length-1]] = format(counter, '08b')
+
+#while loop for making the variable dictionary
+while(x[0] == "var"):
+    variable_dict[x[1]] = format(variable_counter, '08b')
+    variable_counter+=1
     x = input().split()
-    counter+=1
-    if(x[0] == "var"):
-        variable_dict[x[0]] = 0
-        counter = 0
-    
-for i in range(0,len(variable_dict)):
-    variable_dict[i] = format(counter+i, '08b') #can we use this as a list??
+
+#while loop for making the label dictionary
+while (x[0]!="hlt"):
+    if(x[0][-1:]==":"):
+        label_dict[x[0][:-1]] = format(label_counter, '08b')
+    label_counter+=1
+    x = input().split()
 
 
 x=input().split()
