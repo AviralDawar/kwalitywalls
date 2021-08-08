@@ -131,7 +131,7 @@ while(y<=256):
         break
 
     elif(x[0]=="add"):
-        if(len(x)<4):
+        if(len(x)!=4):
             print("Wrong type")
             break
 
@@ -142,7 +142,7 @@ while(y<=256):
             final=Addition(x[1],x[2],x[3])
         
     elif(x[0]=="sub"):
-        if(len(x)<4):
+        if(len(x)!=4):
             print("Wrong type")
             break
         elif(x[1] not in register or x[2] not in register  or x[3] not in register):
@@ -152,10 +152,9 @@ while(y<=256):
             final=Subtraction(x[1],x[2],x[3])
     
     elif(x[0]=="mov"):
-        
-        if(len(x)<3):
-            print("Wrong type")
-            break
+        if(len(x)!=3):
+             print("Wrong type")
+             break
 
         elif(x[2][0:1]=="$"):
             if(int(x[2][1:])>255 or int(x[2][1:])<0):
@@ -171,9 +170,10 @@ while(y<=256):
                 final=moveRegister(x[1],x[2])
             
     elif(x[0]=="ld"):
-        if(len(x)<3):
-            print("Wrong type")
-            break
+        if(len(x)!=3):
+             print("Wrong type")
+             break
+
         elif(x[1] not in register or x[2] not in variable_dict.keys()):
             print("Use of undefined variables")  
             break
@@ -185,9 +185,9 @@ while(y<=256):
             final=load(x[1],x[2])
         
     elif(x[0]=="st"):
-        if(len(x)<3):
-            print("Wrong type")
-            break
+        if(len(x)!=3):
+             print("Wrong type")
+             break
         elif(x[1] not in register or x[2] not in variable_dict.keys()):
             print("Use of undefined variables")  
             break
@@ -198,18 +198,54 @@ while(y<=256):
             final=store(x[1],x[2])
         
     elif(x[0]=="mul"):
-        final=Multiplication(x[1],x[2],x[3])
+        if(len(x)!=4):
+             print("Wrong type")
+             break
+        elif(x[1] not in register or x[2] not in register  or x[3] not in register):
+            print ("Register not found")
+            break
+        else:
+            final=Multiplication(x[1],x[2],x[3])
         
-    if(x[0]=="div"):
-        final=divide(x[1],x[2])
+    elif(x[0]=="div"):
+        if(len(x)!=3):
+             print("Wrong type")
+             break
+        elif(x[1] not in register or x[2] not in register):
+            print ("Register not found")
+            break
+        else:
+            final=divide(x[1],x[2])
         
-    if(x[0]=="rs"):
-        final=right_shift(x[1],int(x[2][1:]))
+    elif(x[0]=="rs"):
+        if(len(x)!=3):
+             print("Wrong type")
+             break
+
         
-    if(x[0]=="ls"):
-        final=left_shift(x[1],int(x[2][1:]))
+        elif(int(x[2][1:])>255 or int(x[2][1:])<0):
+                print("Illegal Immediate value")
+        elif(x[1] not in register):
+                print ("Register not found")
+     
+        else:
+            final=right_shift(x[1],int(x[2][1:]))
         
-    if(x[0]=="xor"):
+    elif(x[0]=="ls"):
+        if(len(x)!=3):
+             print("Wrong type")
+             break
+
+        
+        elif(int(x[2][1:])>255 or int(x[2][1:])<0):
+                print("Illegal Immediate value")
+        elif(x[1] not in register):
+                print ("Register not found")
+     
+        else:
+            final=left_shift(x[1],int(x[2][1:]))
+        
+    elif(x[0]=="xor"):
         if(len(x)!=4):
             print("Wrong type")
             break
@@ -220,7 +256,7 @@ while(y<=256):
         else:
             final=Exclusive_OR(x[1],x[2],x[3])
         
-    if(x[0]=="or"):
+    elif(x[0]=="or"):
         if(len(x)!=4):
             print("Wrong type")
             break
@@ -231,7 +267,7 @@ while(y<=256):
         else:
             final=OR(x[1],x[2],x[3])
         
-    if(x[0]=="and"):
+    elif(x[0]=="and"):
         if(len(x)!=4):
             print("Wrong type")
             break
@@ -242,7 +278,7 @@ while(y<=256):
         else:
             final=AND(x[1],x[2],x[3])
         
-    if(x[0]=="not"):
+    elif(x[0]=="not"):
         if(len(x)!=3):
             print("Wrong type")
             break
@@ -253,7 +289,7 @@ while(y<=256):
         else:
             final=invert(x[1],x[2])
         
-    if(x[0]=="cmp"):
+    elif(x[0]=="cmp"):
         if(len(x)!=3):
             print("Wrong type")
             break
@@ -264,7 +300,7 @@ while(y<=256):
         else:
             final=compare(x[1],x[2])
         
-    if(x[0]=="jmp"):
+    elif(x[0]=="jmp"):
         if(len(x)!=2):
             print("Wrong type")
             break
@@ -280,7 +316,7 @@ while(y<=256):
             final=UnconditionalJump(x[1])
 
         
-    if(x[0]=="jlt"):
+    elif(x[0]=="jlt"):
         if(len(x)!=2):
             print("Wrong type")
             break
@@ -295,7 +331,7 @@ while(y<=256):
         else:
             final=JumpIfLessThan(x[1])
         
-    if(x[0]=="jgt"):
+    elif(x[0]=="jgt"):
         if(len(x)!=2):
             print("Wrong type")
             break
@@ -310,7 +346,7 @@ while(y<=256):
         else:
             final=JumpIfGreaterThan(x[1])
         
-    if(x[0]=="je"):
+    elif(x[0]=="je"):
         if(len(x)!=2):
             print("Wrong type")
             break
@@ -325,7 +361,7 @@ while(y<=256):
         else:
             final=JumpIfEqualTo(x[1])
         
-    if(x[0]=="hlt"):
+    elif(x[0]=="hlt"):
         final=Halt()
         print(final)
         break
