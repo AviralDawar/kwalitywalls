@@ -181,9 +181,12 @@ while(y<=256):
             print("Misuse of variables as labels") 
             break
         else:
+            if(type(x[2]) == str):
+                final=load(x[1],variable_dict[x[2]])
 
-            final=load(x[1],x[2])
-        
+            else:
+                final=load(x[1],x[2])
+
     elif(x[0]=="st"):
         if(len(x)!=3):
              print("Wrong type")
@@ -195,7 +198,11 @@ while(y<=256):
             print("Misuse of variables as labels") 
             break
         else:
-            final=store(x[1],x[2])
+            if(type(x[2]) == str):
+                final=store(x[1],variable_dict[x[2]])
+
+            else:
+                final=store(x[1],x[2])
         
     elif(x[0]=="mul"):
         if(len(x)!=4):
