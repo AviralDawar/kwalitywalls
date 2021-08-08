@@ -110,7 +110,7 @@ variable_counter = 0
 label_dict = {} #this label is for storing the address of the labels
 variable_dict = {} #this label is for storing the address of the variables
 instructions=["add","sub","mov","ld","st","mul","div","rs","ls","xor","or","and","not","cmp","jmp","jlt","jgt","je","hlt"]
-register=["reg0","reg1","reg2","reg3","reg4","reg5","reg6"]
+register=["R0","R1","R2","R3","R4","R5","R6"]
  
 while(y<=256):
 
