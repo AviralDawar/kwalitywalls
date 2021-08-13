@@ -122,7 +122,7 @@ for x in input_list:     #assign memory location to variables
         break
     else:
         idx=len(input_list)-temp
-        variable_dict.add(x[1],format(idx, '08b'))
+        variable_dict[x[1]] = format(idx, '08b')
         temp-=1
 
 for i in range(var_count ,len(input_list)):
@@ -146,7 +146,7 @@ for i in range(var_count ,len(input_list)):
         label_counter+=1
         input_list[i] = [input_list[i][1:]]
  
-for i in range(var_count,len[input_list]):
+for i in range(var_count,len(input_list)):
     x=input_list[i]
     
     if x[0] not in instructions:
