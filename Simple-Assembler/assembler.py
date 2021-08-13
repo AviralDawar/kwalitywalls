@@ -176,7 +176,7 @@ for i in range(var_count,len[input_list]):
     elif(x[0]=="mov"):
         if(len(x)!=3):
             output_list.append("Wrong type")
-             break
+            break
 
         elif(x[2][0:1]=="$"):
             if(int(x[2][1:])>255 or int(x[2][1:])<0):
@@ -193,8 +193,8 @@ for i in range(var_count,len[input_list]):
             
     elif(x[0]=="ld"):
         if(len(x)!=3):
-             output_list.append("Wrong type")
-             break
+            output_list.append("Wrong type")
+            break
 
         elif(x[1] not in register or x[2] not in variable_dict.keys()):
             output_list.append("Use of undefined variables")  
@@ -211,8 +211,8 @@ for i in range(var_count,len[input_list]):
 
     elif(x[0]=="st"):
         if(len(x)!=3):
-             output_list.append("Wrong type")
-             break
+            output_list.append("Wrong type")
+            break
         elif(x[1] not in register or x[2] not in variable_dict.keys()):
             output_list.append("Use of undefined variables")  
             break
@@ -228,8 +228,8 @@ for i in range(var_count,len[input_list]):
         
     elif(x[0]=="mul"):
         if(len(x)!=4):
-             output_list.append("Wrong type")
-             break
+            output_list.append("Wrong type")
+            break
         elif(x[1] not in register or x[2] not in register  or x[3] not in register):
             output_list.append ("Register not found")
             break
@@ -238,18 +238,18 @@ for i in range(var_count,len[input_list]):
         
     elif(x[0]=="div"):
         if(len(x)!=3):
-             output_list.append("Wrong type")
-             break
+            output_list.append("Wrong type")
+            break
         elif(x[1] not in register or x[2] not in register):
-             output_list.append("Register not found")
-             break
+            output_list.append("Register not found")
+            break
         else:
             output_list.append(divide(x[1],x[2]))
         
     elif(x[0]=="rs"):
         if(len(x)!=3):
-             output_list.append("Wrong type")
-             break
+            output_list.append("Wrong type")
+            break
 
         
         elif(int(x[2][1:])>255 or int(x[2][1:])<0):
@@ -262,8 +262,8 @@ for i in range(var_count,len[input_list]):
         
     elif(x[0]=="ls"):
         if(len(x)!=3):
-             output_list.append("Wrong type")
-             break
+            output_list.append("Wrong type")
+            break
 
         
         elif(int(x[2][1:])>255 or int(x[2][1:])<0):
