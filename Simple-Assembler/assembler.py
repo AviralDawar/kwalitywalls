@@ -98,8 +98,7 @@ def Halt():
     s="1001100000000000"
     return(s)
 
-f = open('Readme.txt', mode='r+')
-input_list = f.readlines()    #l=[intructions as strings]
+input_list = list(map(str, sys.stdin.readlines())) #l=[intructions as strings]
 variable_dict = {}
 var_count=0
 output_list=[]
