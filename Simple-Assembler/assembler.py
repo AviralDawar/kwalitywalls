@@ -167,7 +167,7 @@ while(y<=256):
             else:
                 final=mov_imm(x[1],int(x[2][1:]))
         else:
-            if (x[1] not in register or x[2] not in registor):
+            if (x[1] not in register or x[2] not in register):
                 print ("Register not found")
             else:
                 final=moveRegister(x[1],x[2])
