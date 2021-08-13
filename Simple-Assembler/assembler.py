@@ -394,4 +394,6 @@ for i in range(var_count,len[input_list]):
         output_list.append(Halt())
         break
 
+for x in output_list:
+    print(x)
         
