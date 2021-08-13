@@ -145,10 +145,10 @@ label_dict = {} #this label is for storing the address of the labels
 instructions=["add","sub","mov","ld","st","mul","div","rs","ls","xor","or","and","not","cmp","jmp","jlt","jgt","je","hlt"]
 register=["R0","R1","R2","R3","R4","R5","R6","FLAGS"]
 for i in range(var_count ,len(input_list)):
-    if(input_list[i][0][-1:]==":"):
-        label_dict[x][0][:-1] = format(label_counter, '08b')
+    if(input_list[i][0][-1:]==":"): 
+        label_dict[input_list[i][0][:-1]] = format(label_counter, '08b')
         label_counter+=1
-        input_list[i] = [input_list[i][1:]]
+        input_list[i] = input_list[i][1:]
  
 for i in range(var_count,len(input_list)):
     x=input_list[i]
