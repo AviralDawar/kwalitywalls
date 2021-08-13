@@ -31,7 +31,6 @@ def store(reg1 , variable):
 
 
 def Multiplication(rega,regb,regc):
-    reg={'R0':'000','R1':'001','R2':'010','R3':'011','R4':'100','R5':'101','R6':'110'}
     s="0011000"
     s=s+reg[rega]+reg[regb]+reg[regc]
     return(s)
@@ -56,21 +55,17 @@ def left_shift(registor,val):
     s+=bin_ans
     return(s)    
 
-
 def Exclusive_OR(rega,regb,regc):
-    reg={'R0':'000','R1':'001','R2':'010','R3':'011','R4':'100','R5':'101','R6':'110'}
     s="0101000"
     s=s+reg[rega]+reg[regb]+reg[regc]
     return(s)
 
 def OR(rega,regb,regc):
-    reg={'R0':'000','R1':'001','R2':'010','R3':'011','R4':'100','R5':'101','R6':'110'}
     s="0101100"
     s=s+reg[rega]+reg[regb]+reg[regc]
     return(s)
 
 def AND(rega,regb,regc):
-    reg={'R0':'000','R1':'001','R2':'010','R3':'011','R4':'100','R5':'101','R6':'110'}
     s="0110000"
     s=s+reg[rega]+reg[regb]+reg[regc]
     return(s)
@@ -143,9 +138,8 @@ for i in range(var_count ,len(input_list)):
         input_list[i] = [input_list[i][1:]]
  
 output_list=[]
-for(i in range(var_count-1,len[input_list])):
+for i in range(var_count,len[input_list]):
     x=input_list[i]
-    
     
     elif(x[0] not in instructions):
         output_list.append("instruction not found")
