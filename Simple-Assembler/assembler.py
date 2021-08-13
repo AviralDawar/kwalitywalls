@@ -103,26 +103,41 @@ def Halt():
     s="1001100000000000"
     return(s)
 
+f = open('Readme.txt', mode='r+')
+input_l = f.readlines()    #l=[intructions as strings]
+variable_dict = {}
+var_count=0
+
+for x in input_l:       # count number of variables
+    x=x.split()
+    
+    if(x[0] != "var"):
+        break
+    else:
+        var_count+=1
+        
+temp=var_count
+
+for x in input_l:     #assign memory location to variables
+   
+    
+    if(x[0] != "var"):
+        break
+    else:
+        idx=len(input_l)-temp
+        variable_dict.add(x[1],format(idx, '08b'))
+        temp-=1
 
 x=input().split()
 y=1
 label_counter = 0
 variable_counter = 0
 label_dict = {} #this label is for storing the address of the labels
-variable_dict = {} #this label is for storing the address of the variables
+
 instructions=["add","sub","mov","ld","st","mul","div","rs","ls","xor","or","and","not","cmp","jmp","jlt","jgt","je","hlt"]
 register=["R0","R1","R2","R3","R4","R5","R6"]
  
 while(y<=256):
-
-    while(x[0] == "var"):
-        if(len(x)!=2): ##doubt , we need to make 2 while loops
-            print("Wrong type")
-            break
-        variable_dict[x[1]] = format(variable_counter, '08b') #the address of variables is after all the code
-        variable_counter+=1
-        y=-1 ##y-1 or -1?
-        x=input().split()
     
     if(x[0][-1:]==":"):
         label_dict[x[0][:-1]] = format(label_counter, '08b')
