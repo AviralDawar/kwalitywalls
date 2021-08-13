@@ -148,7 +148,7 @@ for i in range(var_count ,len(input_list)):
 for i in range(var_count,len[input_list]):
     x=input_list[i]
     
-    elif(x[0] not in instructions):
+    elif x[0] not in instructions:
         output_list.append("instruction not found")
         break
 
