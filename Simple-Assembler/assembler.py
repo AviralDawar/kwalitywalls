@@ -100,7 +100,7 @@ def Halt():
 
 
 #input_list = list(map(str, sys.stdin.readlines())) #l=[intructions as strings]
-path='\Users\Veneet Gandhi\Desktop\kwalitywalls'
+path='\Users\Veneet Gandhi\Desktop\kwalitywalls\Simple-Assembler\assembler.py'
 code=[i.strip().split() for i in open(path).readlines()]
 input_list=code
 variable_dict = {}
