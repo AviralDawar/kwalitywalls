@@ -133,11 +133,6 @@ for i in range(var_count ,len(input_list)):
     if(x[0] == "var"):
         output_list.append("variables not in beginning")
 
-if ["hlt"] not in input_list:
-    output_list.append("halt instruction missing")
-
-elif(input_list[-1]!="hlt"):
-    output_list.append("instructions after halt")
 
 label_counter = 0
 label_dict = {} #this label is for storing the address of the labels
@@ -145,10 +140,17 @@ label_dict = {} #this label is for storing the address of the labels
 instructions=["add","sub","mov","ld","st","mul","div","rs","ls","xor","or","and","not","cmp","jmp","jlt","jgt","je","hlt"]
 register=["R0","R1","R2","R3","R4","R5","R6","FLAGS"]
 for i in range(var_count ,len(input_list)):
+
     if(input_list[i][0][-1:]==":"): 
         label_dict[input_list[i][0][:-1]] = format(label_counter, '08b')
         label_counter+=1
         input_list[i] = input_list[i][1:]
+if ["hlt"] not in input_list:
+    output_list.append("halt instruction missing")
+
+elif(input_list[-1]!=["hlt"]):
+    output_list.append("instructions after halt")
+
  
 for i in range(var_count,len(input_list)):
     x=input_list[i]
@@ -343,7 +345,7 @@ for i in range(var_count,len(input_list)):
             output_list.append("Use of undefined label")  
             break
 
-        elif(x[2] in variable_dict.keys()):
+        elif(x[1] in variable_dict.keys()):
             output_list.append("Misuse of labels as variable") 
             break
         else:
@@ -359,7 +361,7 @@ for i in range(var_count,len(input_list)):
             output_list.append("Use of undefined label")  
             break
 
-        elif(x[2] in variable_dict.keys()):
+        elif(x[1] in variable_dict.keys()):
             output_list.append("Misuse of labels as variable") 
             break
         else:
@@ -374,7 +376,7 @@ for i in range(var_count,len(input_list)):
             output_list.append("Use of undefined label")  
             break
 
-        elif(x[2] in variable_dict.keys()):
+        elif(x[1] in variable_dict.keys()):
             output_list.append("Misuse of labels as variable") 
             break
         else:
@@ -389,7 +391,7 @@ for i in range(var_count,len(input_list)):
             output_list.append("Use of undefined label")  
             break
 
-        elif(x[2] in variable_dict.keys()):
+        elif(x[1] in variable_dict.keys()):
             output_list.append("Misuse of labels as variable") 
             break
         else:
