@@ -98,7 +98,11 @@ def Halt():
     s="1001100000000000"
     return(s)
 
-input_list = list(map(str, sys.stdin.readlines())) #l=[intructions as strings]
+
+#input_list = list(map(str, sys.stdin.readlines())) #l=[intructions as strings]
+path='\Users\Veneet Gandhi\Desktop\kwalitywalls'
+code=[i.strip().split() for i in open(path).readlines()]
+input_list=code
 variable_dict = {}
 var_count=0
 output_list=[]
@@ -176,7 +180,7 @@ for i in range(var_count,len[input_list]):
     elif(x[0]=="mov"):
         if(len(x)!=3):
             output_list.append("Wrong type")
-             break
+            break
 
         elif(x[2][0:1]=="$"):
             if(int(x[2][1:])>255 or int(x[2][1:])<0):
