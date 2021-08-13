@@ -99,34 +99,39 @@ def Halt():
     return(s)
 
 f = open('Readme.txt', mode='r+')
-input_l = f.readlines()    #l=[intructions as strings]
+input_list = f.readlines()    #l=[intructions as strings]
 variable_dict = {}
 var_count=0
-
-for x in input_l:       # count number of variables
+output_list=[]
+for x in input_list:
     x=x.split()
-    
+
+for x in input_list:       # count number of variables
     if(x[0] != "var"):
         break
     else:
         var_count+=1
-        
+
 temp=var_count
 
-for x in input_l:     #assign memory location to variables
-   
-    
+for x in input_list:     #assign memory location to variables
     if(x[0] != "var"):
         break
     else:
-        idx=len(input_l)-temp
+        idx=len(input_list)-temp
         variable_dict.add(x[1],format(idx, '08b'))
         temp-=1
+for i in range(var_count ,len(input_list)):
+    if(x[0] == "var"):
+        output_list.append("variables not in beginning")
 
-x=input().split()
-y=1
+if ["hlt"] not in input_list:
+    output_list.append("halt instruction missing")
+
+elif(input_list[-1]!="hlt"):
+    output_list.append("instructions after halt")
+
 label_counter = 0
-variable_counter = 0
 label_dict = {} #this label is for storing the address of the labels
 
 instructions=["add","sub","mov","ld","st","mul","div","rs","ls","xor","or","and","not","cmp","jmp","jlt","jgt","je","hlt"]
@@ -137,7 +142,6 @@ for i in range(var_count ,len(input_list)):
         label_counter+=1
         input_list[i] = [input_list[i][1:]]
  
-output_list=[]
 for i in range(var_count,len[input_list]):
     x=input_list[i]
     
