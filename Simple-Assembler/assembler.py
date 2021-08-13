@@ -102,8 +102,11 @@ input_list = list(map(str, sys.stdin.readlines())) #l=[intructions as strings]
 variable_dict = {}
 var_count=0
 output_list=[]
-for x in input_list:
+
+for i in range(len(input_list)):
+    x=input_list[i]
     x=x.split()
+    input_list[i]=x
 
 for x in input_list:       # count number of variables
     if(x[0] != "var"):
@@ -120,6 +123,7 @@ for x in input_list:     #assign memory location to variables
         idx=len(input_list)-temp
         variable_dict.add(x[1],format(idx, '08b'))
         temp-=1
+
 for i in range(var_count ,len(input_list)):
     if(x[0] == "var"):
         output_list.append("variables not in beginning")
@@ -389,4 +393,5 @@ for i in range(var_count,len[input_list]):
     elif(x[0]=="hlt"):
         output_list.append(Halt())
         break
+
         
