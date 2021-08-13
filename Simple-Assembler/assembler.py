@@ -136,13 +136,15 @@ label_dict = {} #this label is for storing the address of the labels
 
 instructions=["add","sub","mov","ld","st","mul","div","rs","ls","xor","or","and","not","cmp","jmp","jlt","jgt","je","hlt"]
 register=["R0","R1","R2","R3","R4","R5","R6"]
+for i in range(var_count ,len(input_list)):
+    if(input_list[i][0][-1:]==":"):
+        label_dict[x][0][:-1] = format(label_counter, '08b')
+        label_counter+=1
+        input_list[i] = [input_list[i][1:]]
  
 while(y<=256):
     
-    if(x[0][-1:]==":"):
-        label_dict[x[0][:-1]] = format(label_counter, '08b')
-        label_counter+=1
-        y=y-1
+    
     
     elif(x[0] not in instructions):
         print("instruction not found")
