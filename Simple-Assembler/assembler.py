@@ -21,12 +21,13 @@ def mov_imm(registor,val):
 def moveRegister(reg1 , reg2):
     return("00011" + "00000" + reg[reg1] + reg[reg2])
     
-def load(reg1 , mem_addr):
-    return("00100" + reg[reg1]+ mem_addr)
+    #load stores all the values if the mem_addr in the reg1
+def load(reg1 , variable): #change load store and all the immediate value checkers also check the variable counter
+    return("00100" + reg[reg1]+variable_dict[variable])
     
 
-def store(reg1 , mem_addr):
-    return("00101" + reg[reg1] + mem_addr)
+def store(reg1 , variable):
+    return("00101" + reg[reg1] + variable_dict[variable])
 
 
 def Multiplication(rega,regb,regc):
@@ -83,20 +84,20 @@ def compare(reg1 , reg2):
     return("01110" + "00000" + reg[reg1] + reg[reg2])
 
 #for jumping to a memory address
-def UnconditionalJump(mem_addr):
-    return("01111" + "000" + mem_addr)
+def UnconditionalJump(label): ##
+    return("01111" + "000" + label_dict[label])
 
 #for jumping if greater than flag = 1
-def JumpIfGreaterThan(mem_addr):
-    return("10001" + "000" + mem_addr)
+def JumpIfGreaterThan(label): ##
+    return("10001" + "000" + label_dict[label])
 
 #for jumping if less than flag = 1
-def JumpIfLessThan(mem_addr):
-    return("10000" + "000" + mem_addr)
+def JumpIfLessThan(label): ##
+    return("10000" + "000" + label_dict[label])
     
 #for jumping if equal to  flag = 1
-def JumpIfEqualTo(mem_addr):
-    return("10010" + "000" + mem_addr)
+def JumpIfEqualTo(label): ##
+    return("10010" + "000" + label_dict[label])
 
 def Halt():
     s="1001100000000000"
@@ -115,12 +116,12 @@ register=["R0","R1","R2","R3","R4","R5","R6"]
 while(y<=256):
 
     while(x[0] == "var"):
-        if(len(x)!=2):
+        if(len(x)!=2): ##doubt , we need to make 2 while loops
             print("Wrong type")
             break
-        variable_dict[x[1]] = format(variable_counter, '08b')
+        variable_dict[x[1]] = format(variable_counter, '08b') #the address of variables is after all the code
         variable_counter+=1
-        y=-1
+        y=-1 ##y-1 or -1?
         x=input().split()
     
     if(x[0][-1:]==":"):
@@ -233,9 +234,9 @@ while(y<=256):
 
         
         elif(int(x[2][1:])>255 or int(x[2][1:])<0):
-                print("Illegal Immediate value")
+            print("Illegal Immediate value")
         elif(x[1] not in register):
-                print ("Register not found")
+            print ("Register not found")
      
         else:
             final=right_shift(x[1],int(x[2][1:]))
