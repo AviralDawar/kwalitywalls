@@ -209,7 +209,7 @@ for i in range(var_count,len(input_list)):
             break
         else:
             if(type(x[2]) == str):
-                output_list.append(load(x[1],variable_dict[x[2]]))
+                output_list.append(load(x[1],x[2]))
 
             else:
                 output_list.append(load(x[1],x[2]))
@@ -226,7 +226,7 @@ for i in range(var_count,len(input_list)):
             break
         else:
             if(type(x[2]) == str):
-                output_list.append(store(x[1],variable_dict[x[2]]))
+                output_list.append(store(x[1],x[2]))
 
             else:
                 output_list.append(store(x[1],x[2]))
