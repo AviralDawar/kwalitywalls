@@ -132,7 +132,7 @@ for i in range(var_count ,len(input_list)):
         output_list.append("variables not in beginning")
 
 
-label_counter = 0
+#label_counter = 0
 label_dict = {} #this label is for storing the address of the labels
 
 instructions=["add","sub","mov","ld","st","mul","div","rs","ls","xor","or","and","not","cmp","jmp","jlt","jgt","je","hlt"]
@@ -140,8 +140,7 @@ register=["R0","R1","R2","R3","R4","R5","R6","FLAGS"]
 for i in range(var_count ,len(input_list)):
 
     if(input_list[i][0][-1:]==":"): 
-        label_dict[input_list[i][0][:-1]] = format(label_counter, '08b')
-        label_counter+=1
+        label_dict[input_list[i][0][:-1]] = format(i-var_count-1, '08b')
         input_list[i] = input_list[i][1:]
 
 hlt_missing_flag = False
@@ -414,5 +413,5 @@ if hlt_missing_flag == False:
 
 for x in output_list:
     print(x)
-    print(x,file = sys.stderr)
+    print(x,file = sys.stderr) #####COMMENT OUT THIS LINE BEFORE SUBMITTING
         
