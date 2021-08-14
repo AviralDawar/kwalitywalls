@@ -405,7 +405,7 @@ if hlt_missing_flag == False:
                 hlt_flag = False
                 break
         
-        elif flag == False:
+        elif hlt_flag == False:
             break
 
     if x[0] != "hlt":
