@@ -102,7 +102,6 @@ def Halt():
 
 #input_list = list(map(str, sys.stdin.readlines())) #l=[intructions as strings]
 input_list = list(map(str, sys.stdin.readlines()))
-input_list=code
 variable_dict = {}
 var_count=0
 output_list=[]
