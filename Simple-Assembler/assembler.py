@@ -101,8 +101,7 @@ def Halt():
 
 
 #input_list = list(map(str, sys.stdin.readlines())) #l=[intructions as strings]
-f = open('Readme.txt', mode='r+')
-code = f.readlines()
+input_list = list(map(str, sys.stdin.readlines()))
 input_list=code
 variable_dict = {}
 var_count=0
