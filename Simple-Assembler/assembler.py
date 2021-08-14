@@ -101,8 +101,8 @@ def Halt():
 
 
 #input_list = list(map(str, sys.stdin.readlines())) #l=[intructions as strings]
-path='c:\Users\Veneet Gandhi\Desktop\kwalitywalls\Simple-Assembler\assembler.py'
-code=[i.strip().split() for i in open(path).readlines()]
+f = open('Readme.txt', mode='r+')
+    code = f.readlines()
 input_list=code
 variable_dict = {}
 var_count=0
@@ -145,261 +145,274 @@ for i in range(var_count ,len(input_list)):
         label_dict[input_list[i][0][:-1]] = format(label_counter, '08b')
         label_counter+=1
         input_list[i] = input_list[i][1:]
+
+hlt_missing_flag = False
 if ["hlt"] not in input_list:
     output_list.append("halt instruction missing")
+    hlt_missing_flag = True
 
-elif(input_list[-1]!=["hlt"]):
-    output_list.append("instructions after halt")
+# elif(input_list[-1]!=["hlt"]): ## to be handeled
+#     output_list.append("instructions after halt")
 
- 
-for i in range(var_count,len(input_list)):
-    x=input_list[i]
-    
-    if x[0] not in instructions:
-        output_list.append("instruction not found")
-        break
+hlt_flag = True 
 
-    elif(x[0]=="add"):
-        if(len(x)!=4):
-            output_list.append("Wrong type")
-            break
+if hlt_missing_flag == False:
+    for i in range(var_count,len(input_list)):
+        x=input_list[i]
+        if hlt_flag == True:
+            if x[0] not in instructions:
+                output_list.append("instruction not found")
+                break
 
-        elif(x[1] not in register or x[2] not in register  or x[3] not in register):
-            output_list.append("Register not found")
-            break
-        else:
-            output_list.append(Addition(x[1],x[2],x[3]))
-        
-    elif(x[0]=="sub"):
-        if(len(x)!=4):
-            output_list.append("Wrong type")
-            break
-        elif(x[1] not in register or x[2] not in register  or x[3] not in register):
-            output_list.append("Register not found")
-            break
-        else:
-            output_list.append(Subtraction(x[1],x[2],x[3]))
-    
-    elif(x[0]=="mov"):
-        if(len(x)!=3):
-            output_list.append("Wrong type")
-            break
+            elif(x[0]=="add"):
+                if(len(x)!=4):
+                    output_list.append("Wrong type")
+                    break
 
-        elif(x[2][0:1]=="$"):
-            if(int(x[2][1:])>255 or int(x[2][1:])<0):
-                output_list.append("Illegal Immediate value")
-            elif(x[1] not in register):
-                output_list.append("Register not found")
-            else:
-                output_list.append(mov_imm(x[1],int(x[2][1:])))
-        else:
-            if (x[1] not in register or x[2] not in register):
-                output_list.append("Register not found")
-            else:
-                output_list.append(moveRegister(x[1],x[2]))
+                elif(x[1] not in register or x[2] not in register  or x[3] not in register):
+                    output_list.append("Register not found")
+                    break
+                else:
+                    output_list.append(Addition(x[1],x[2],x[3]))
+                
+            elif(x[0]=="sub"):
+                if(len(x)!=4):
+                    output_list.append("Wrong type")
+                    break
+                elif(x[1] not in register or x[2] not in register  or x[3] not in register):
+                    output_list.append("Register not found")
+                    break
+                else:
+                    output_list.append(Subtraction(x[1],x[2],x[3]))
             
-    elif(x[0]=="ld"):
-        if(len(x)!=3):
-            output_list.append("Wrong type")
-            break
+            elif(x[0]=="mov"):
+                if(len(x)!=3):
+                    output_list.append("Wrong type")
+                    break
 
-        elif(x[1] not in register or x[2] not in variable_dict.keys()):
-            output_list.append("Use of undefined variables")  
-            break
-        elif(x[2] in label_dict):
-            output_list.append("Misuse of variables as labels") 
-            break
-        else:
-            if(type(x[2]) == str):
-                output_list.append(load(x[1],x[2]))
+                elif(x[2][0:1]=="$"):
+                    if(int(x[2][1:])>255 or int(x[2][1:])<0):
+                        output_list.append("Illegal Immediate value")
+                    elif(x[1] not in register):
+                        output_list.append("Register not found")
+                    else:
+                        output_list.append(mov_imm(x[1],int(x[2][1:])))
+                else:
+                    if (x[1] not in register or x[2] not in register):
+                        output_list.append("Register not found")
+                    else:
+                        output_list.append(moveRegister(x[1],x[2]))
+                    
+            elif(x[0]=="ld"):
+                if(len(x)!=3):
+                    output_list.append("Wrong type")
+                    break
 
-            else:
-                output_list.append(load(x[1],x[2]))
+                elif(x[1] not in register or x[2] not in variable_dict.keys()):
+                    output_list.append("Use of undefined variables")  
+                    break
+                elif(x[2] in label_dict):
+                    output_list.append("Misuse of variables as labels") 
+                    break
+                else:
+                    if(type(x[2]) == str):
+                        output_list.append(load(x[1],x[2]))
 
-    elif(x[0]=="st"):
-        if(len(x)!=3):
-            output_list.append("Wrong type")
-            break
-        elif(x[1] not in register or x[2] not in variable_dict.keys()):
-            output_list.append("Use of undefined variables")  
-            break
-        elif(x[2] in label_dict):
-            output_list.append("Misuse of variables as labels") 
-            break
-        else:
-            if(type(x[2]) == str):
-                output_list.append(store(x[1],x[2]))
+                    else:
+                        output_list.append(load(x[1],x[2]))
 
-            else:
-                output_list.append(store(x[1],x[2]))
+            elif(x[0]=="st"):
+                if(len(x)!=3):
+                    output_list.append("Wrong type")
+                    break
+                elif(x[1] not in register or x[2] not in variable_dict.keys()):
+                    output_list.append("Use of undefined variables")  
+                    break
+                elif(x[2] in label_dict):
+                    output_list.append("Misuse of variables as labels") 
+                    break
+                else:
+                    if(type(x[2]) == str):
+                        output_list.append(store(x[1],x[2]))
+
+                    else:
+                        output_list.append(store(x[1],x[2]))
+                
+            elif(x[0]=="mul"):
+                if(len(x)!=4):
+                    output_list.append("Wrong type")
+                    break
+                elif(x[1] not in register or x[2] not in register  or x[3] not in register):
+                    output_list.append ("Register not found")
+                    break
+                else:
+                    output_list.append(Multiplication(x[1],x[2],x[3]))
+                
+            elif(x[0]=="div"):
+                if(len(x)!=3):
+                    output_list.append("Wrong type")
+                    break
+                elif(x[1] not in register or x[2] not in register):
+                    output_list.append("Register not found")
+                    break
+                else:
+                    output_list.append(divide(x[1],x[2]))
+                
+            elif(x[0]=="rs"):
+                if(len(x)!=3):
+                    output_list.append("Wrong type")
+                    break
+
+                
+                elif(int(x[2][1:])>255 or int(x[2][1:])<0):
+                    output_list.append("Illegal Immediate value")
+                elif(x[1] not in register):
+                    output_list.append ("Register not found")
+            
+                else:
+                    output_list.append(right_shift(x[1],int(x[2][1:])))
+                
+            elif(x[0]=="ls"):
+                if(len(x)!=3):
+                    output_list.append("Wrong type")
+                    break
+
+                
+                elif(int(x[2][1:])>255 or int(x[2][1:])<0):
+                        output_list.append("Illegal Immediate value")
+                elif(x[1] not in register):
+                        output_list.append ("Register not found")
+            
+                else:
+                    output_list.append(left_shift(x[1],int(x[2][1:])))
+                
+            elif(x[0]=="xor"):
+                if(len(x)!=4):
+                    output_list.append("Wrong type")
+                    break
+
+                elif(x[1] not in register or x[2] not in register  or x[3] not in register):
+                    output_list.append ("Register not found")
+                    break
+                else:
+                    output_list.append(Exclusive_OR(x[1],x[2],x[3]))
+                
+            elif(x[0]=="or"):
+                if(len(x)!=4):
+                    output_list.append("Wrong type")
+                    break
+
+                elif(x[1] not in register or x[2] not in register  or x[3] not in register):
+                    output_list.append("Register not found")
+                    break
+                else:
+                    output_list.append(OR(x[1],x[2],x[3]))
+                
+            elif(x[0]=="and"):
+                if(len(x)!=4):
+                    output_list.append("Wrong type")
+                    break
+
+                elif(x[1] not in register or x[2] not in register  or x[3] not in register):
+                    output_list.append("Register not found")
+                    break
+                else:
+                    output_list.append(AND(x[1],x[2],x[3]))
+                
+            elif(x[0]=="not"):
+                if(len(x)!=3):
+                    print("Wrong type")
+                    break
+
+                elif(x[1] not in register or x[2] not in register):
+                    output_list.append("Register not found")
+                    break
+                else:
+                    output_list.append(invert(x[1],x[2]))
+                
+            elif(x[0]=="cmp"):
+                if(len(x)!=3):
+                    output_list.append("Wrong type")
+                    break
+
+                elif(x[1] not in register or x[2] not in register):
+                    output_list.append("Register not found")
+                    break
+                else:
+                    output_list.append(compare(x[1],x[2]))
+                
+            elif(x[0]=="jmp"):
+                if(len(x)!=2):
+                    output_list.append("Wrong type")
+                    break
+
+                elif(x[1] not in label_dict.keys()):
+                    output_list.append("Use of undefined label")  
+                    break
+
+                elif(x[1] in variable_dict.keys()):
+                    output_list.append("Misuse of labels as variable") 
+                    break
+                else:
+                    output_list.append(UnconditionalJump(x[1]))
+
+                
+            elif(x[0]=="jlt"):
+                if(len(x)!=2):
+                    output_list.append("Wrong type")
+                    break
+
+                elif(x[1] not in label_dict.keys()):
+                    output_list.append("Use of undefined label")  
+                    break
+
+                elif(x[1] in variable_dict.keys()):
+                    output_list.append("Misuse of labels as variable") 
+                    break
+                else:
+                    output_list.append(JumpIfLessThan(x[1]))
+                
+            elif(x[0]=="jgt"):
+                if(len(x)!=2):
+                    output_list.append("Wrong type")
+                    break
+
+                elif(x[1] not in label_dict.keys()):
+                    output_list.append("Use of undefined label")  
+                    break
+
+                elif(x[1] in variable_dict.keys()):
+                    output_list.append("Misuse of labels as variable") 
+                    break
+                else:
+                    output_list.append(JumpIfGreaterThan(x[1]))
+                
+            elif(x[0]=="je"):
+                if(len(x)!=2):
+                    output_list.append("Wrong type")
+                    break
+
+                elif(x[1] not in label_dict.keys()):
+                    output_list.append("Use of undefined label")  
+                    break
+
+                elif(x[1] in variable_dict.keys()):
+                    output_list.append("Misuse of labels as variable") 
+                    break
+                else:
+                    output_list.append(JumpIfEqualTo(x[1]))
+                
+            elif(x[0]=="hlt"):
+                output_list.append(Halt())
+                hlt_flag = False
+                break
         
-    elif(x[0]=="mul"):
-        if(len(x)!=4):
-            output_list.append("Wrong type")
-            break
-        elif(x[1] not in register or x[2] not in register  or x[3] not in register):
-            output_list.append ("Register not found")
-            break
-        else:
-            output_list.append(Multiplication(x[1],x[2],x[3]))
-        
-    elif(x[0]=="div"):
-        if(len(x)!=3):
-            output_list.append("Wrong type")
-            break
-        elif(x[1] not in register or x[2] not in register):
-            output_list.append("Register not found")
-            break
-        else:
-            output_list.append(divide(x[1],x[2]))
-        
-    elif(x[0]=="rs"):
-        if(len(x)!=3):
-            output_list.append("Wrong type")
+        else if flag == False:
             break
 
-        
-        elif(int(x[2][1:])>255 or int(x[2][1:])<0):
-            output_list.append("Illegal Immediate value")
-        elif(x[1] not in register):
-            output_list.append ("Register not found")
-     
-        else:
-            output_list.append(right_shift(x[1],int(x[2][1:])))
-        
-    elif(x[0]=="ls"):
-        if(len(x)!=3):
-            output_list.append("Wrong type")
-            break
+    if x[0] != "hlt":
+        output_list.append("instructions after halt")
 
-        
-        elif(int(x[2][1:])>255 or int(x[2][1:])<0):
-                output_list.append("Illegal Immediate value")
-        elif(x[1] not in register):
-                output_list.append ("Register not found")
-     
-        else:
-            output_list.append(left_shift(x[1],int(x[2][1:])))
-        
-    elif(x[0]=="xor"):
-        if(len(x)!=4):
-            output_list.append("Wrong type")
-            break
-
-        elif(x[1] not in register or x[2] not in register  or x[3] not in register):
-            output_list.append ("Register not found")
-            break
-        else:
-            output_list.append(Exclusive_OR(x[1],x[2],x[3]))
-        
-    elif(x[0]=="or"):
-        if(len(x)!=4):
-            output_list.append("Wrong type")
-            break
-
-        elif(x[1] not in register or x[2] not in register  or x[3] not in register):
-            output_list.append("Register not found")
-            break
-        else:
-            output_list.append(OR(x[1],x[2],x[3]))
-        
-    elif(x[0]=="and"):
-        if(len(x)!=4):
-            output_list.append("Wrong type")
-            break
-
-        elif(x[1] not in register or x[2] not in register  or x[3] not in register):
-            output_list.append("Register not found")
-            break
-        else:
-            output_list.append(AND(x[1],x[2],x[3]))
-        
-    elif(x[0]=="not"):
-        if(len(x)!=3):
-            print("Wrong type")
-            break
-
-        elif(x[1] not in register or x[2] not in register):
-            output_list.append("Register not found")
-            break
-        else:
-            output_list.append(invert(x[1],x[2]))
-        
-    elif(x[0]=="cmp"):
-        if(len(x)!=3):
-            output_list.append("Wrong type")
-            break
-
-        elif(x[1] not in register or x[2] not in register):
-            output_list.append("Register not found")
-            break
-        else:
-            output_list.append(compare(x[1],x[2]))
-        
-    elif(x[0]=="jmp"):
-        if(len(x)!=2):
-            output_list.append("Wrong type")
-            break
-
-        elif(x[1] not in label_dict.keys()):
-            output_list.append("Use of undefined label")  
-            break
-
-        elif(x[1] in variable_dict.keys()):
-            output_list.append("Misuse of labels as variable") 
-            break
-        else:
-            output_list.append(UnconditionalJump(x[1]))
-
-        
-    elif(x[0]=="jlt"):
-        if(len(x)!=2):
-            output_list.append("Wrong type")
-            break
-
-        elif(x[1] not in label_dict.keys()):
-            output_list.append("Use of undefined label")  
-            break
-
-        elif(x[1] in variable_dict.keys()):
-            output_list.append("Misuse of labels as variable") 
-            break
-        else:
-            output_list.append(JumpIfLessThan(x[1]))
-        
-    elif(x[0]=="jgt"):
-        if(len(x)!=2):
-            output_list.append("Wrong type")
-            break
-
-        elif(x[1] not in label_dict.keys()):
-            output_list.append("Use of undefined label")  
-            break
-
-        elif(x[1] in variable_dict.keys()):
-            output_list.append("Misuse of labels as variable") 
-            break
-        else:
-            output_list.append(JumpIfGreaterThan(x[1]))
-        
-    elif(x[0]=="je"):
-        if(len(x)!=2):
-            output_list.append("Wrong type")
-            break
-
-        elif(x[1] not in label_dict.keys()):
-            output_list.append("Use of undefined label")  
-            break
-
-        elif(x[1] in variable_dict.keys()):
-            output_list.append("Misuse of labels as variable") 
-            break
-        else:
-            output_list.append(JumpIfEqualTo(x[1]))
-        
-    elif(x[0]=="hlt"):
-        output_list.append(Halt())
-        break
 
 for x in output_list:
     print(x)
