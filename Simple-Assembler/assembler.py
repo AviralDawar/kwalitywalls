@@ -139,7 +139,7 @@ for i in range(0,len(input_list)):     #assign memory location to variables
 
 for i in range(var_count ,len(input_list)):
     if input_list[i][0] == "var":
-        output_list.append("variables not in beginning"+" ,line no:"+i)
+        output_list.append("variables not in beginning"+" ,line no:" + str(i-var_count))
 
 
 #label_counter = 0
