@@ -101,8 +101,8 @@ def Halt():
 
 
 input_list = list(map(str, sys.stdin.readlines())) #l=[intructions as strings]
-# f = open('sys.txt', mode='r+')
-# input_list = f.readlines()
+#f = open('sys.txt', mode='r+')
+#input_list = f.readlines()
 i=0
 while(i<len(input_list)):
     if input_list[i]=="\n":
@@ -117,10 +117,11 @@ for i in range(len(input_list)):
     x=input_list[i]
     x=x.split()
     input_list[i]=x
-   
+    
+    
 if input_list==[]:
     print("no input")
-   
+    
 for i in range(0 ,len(input_list)):       # count number of variables
     if(input_list[i][0] != "var"):
         break
@@ -163,14 +164,13 @@ if ["hlt"] not in input_list:
 #     output_list.append("instructions after halt")
 
 hlt_flag = True
-if(input_list!=[] and input_list[-1]!=["hlt"]):
+if(input_list!=[] and input_list[-1]!=["hlt"] and hlt_missing_flag==False):
     print("instructions after hlt"+" ,line no:"+str(input_list.index(["hlt"])+1-var_count))
     hlt_missing_flag = True
 if(input_list.count(["hlt"])>1):
     print("halt multiple error"+" ,line no:"+str(len(input_list) - 1-var_count - input_list[::-1].index(["hlt"])))
     hlt_missing_flag = True
 
-   
 
 if hlt_missing_flag == False:
     for i in range(var_count,len(input_list)):
@@ -422,7 +422,6 @@ if hlt_missing_flag == False:
                 output_list.append(Halt())
                 break
        
-
+    
 for x in output_list:
     print(x)
-    print(x,file = sys.stderr) #####COMMENT OUT THIS LINE BEFORE SUBMITTING
