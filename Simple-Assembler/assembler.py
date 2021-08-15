@@ -425,4 +425,4 @@ if hlt_missing_flag == False:
 
 for x in output_list:
     print(x)
-    #print(x,file = sys.stderr) #####COMMENT OUT THIS LINE BEFORE SUBMITTING
+    print(x,file = sys.stderr) #####COMMENT OUT THIS LINE BEFORE SUBMITTING
