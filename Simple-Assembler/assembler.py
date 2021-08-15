@@ -100,9 +100,9 @@ def Halt():
     return(s)
 
 
-#input_list = list(map(str, sys.stdin.readlines())) #l=[intructions as strings]
-f = open('sys.txt', mode='r+')
-input_list = f.readlines()
+input_list = list(map(str, sys.stdin.readlines())) #l=[intructions as strings]
+# f = open('sys.txt', mode='r+')
+# input_list = f.readlines()
 i=0
 while(i<len(input_list)):
     if input_list[i]=="\n":
