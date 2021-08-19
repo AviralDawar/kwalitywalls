@@ -28,10 +28,6 @@ if(x[0:5]=="00001"):
         reg_value["FLAGS"]+=8
         reg_value[reg1]=0
         
-        
-    
-    
-   
 if(x[0:5]=="00110"):
     reg1=reg[x[7:10]]
     reg2=reg[x[10:13]]
@@ -42,3 +38,21 @@ if(x[0:5]=="00110"):
     if(reg_value[reg1]<0 or reg_value[reg1]>256 ):
         reg_value["FLAGS"]=0
         reg_value["FLAGS"]+=8
+
+if(x[0:5]=="00010"):
+    #imm
+    reg1=reg[x[5:8]]
+    imm=int(x[8:],2)
+    reg_value[reg1]=imm
+    
+if(x[0:5]=="01001"):
+    #left_shift
+    reg1=reg[x[5:8]]
+    imm=int(x[8:],2)
+    reg_value[reg1]= int(reg_value[reg1])<<imm
+
+if(x[0:5]=="01000"):
+    #right_shift
+    reg1=reg[x[5:8]]
+    imm=int(x[8:],2)
+    reg_value[reg1]= int(reg_value[reg1])>>imm
