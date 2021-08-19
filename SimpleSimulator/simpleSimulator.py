@@ -14,7 +14,7 @@ while(i<len(input_list))
         reg1=reg[x[7:10]]
         reg2=reg[x[10:13]]
         reg3=reg[x[13:]]
-        reg_value[reg1]=reg_value[reg1]+reg_value[reg2]
+        reg_value[reg1]=reg_value[reg2]+reg_value[reg3]
     
     
         if(reg_value[reg1]>=256):
@@ -26,7 +26,7 @@ while(i<len(input_list))
         reg1=reg[x[7:10]]
         reg2=reg[x[10:13]]
         reg3=reg[x[13:]]
-        reg_value[reg1]=reg_value[reg1]-reg_value[reg2]
+        reg_value[reg1]=reg_value[reg2]-reg_value[reg3]
         
         
         if(reg_value[reg1]<0):
@@ -38,12 +38,33 @@ while(i<len(input_list))
         reg1=reg[x[7:10]]
         reg2=reg[x[10:13]]
         reg3=reg[x[13:]]
-        reg_value[reg1]=reg_value[reg1]*reg_value[reg2]
+        reg_value[reg1]=reg_value[reg2]*reg_value[reg3]
         
         
         if(reg_value[reg1]<0 or reg_value[reg1]>256 ):
             reg_value["FLAGS"]=0
             reg_value["FLAGS"]+=8
+
+    if(x[0:5]=="01010"):
+        #xor
+        reg1=reg[x[7:10]]
+        reg2=reg[x[10:13]]
+        reg3=reg[x[13:]]
+        reg_value[reg1]=reg_value[reg2]^reg_value[reg3]
+    
+    if(x[0:5]=="01011"):
+        #or
+        reg1=reg[x[7:10]]
+        reg2=reg[x[10:13]]
+        reg3=reg[x[13:]]
+        reg_value[reg1]=reg_value[reg2]|reg_value[reg3]
+    
+    if(x[0:5]=="01100"):
+        #and
+        reg1=reg[x[7:10]]
+        reg2=reg[x[10:13]]
+        reg3=reg[x[13:]]
+        reg_value[reg1]=reg_value[reg2] & reg_value[reg3]
 
     if(x[0:5]=="00010"):
         #imm
@@ -102,6 +123,16 @@ while(i<len(input_list))
         reg1=reg[x[5:8]]
         val=var_dict[int(x[8:],2)-len(input_list)]
         reg_value[reg1]=val
+
+    if(x[0:5] == "01111"):
+        i=int(x[8:],2)
+        continue
+
+    
+
+    
+    
+     
 
     
 
