@@ -59,3 +59,39 @@ for i in range(0,len(input_list)):
         reg1=reg[x[5:8]]
         imm=int(x[8:],2)
         reg_value[reg1]= int(reg_value[reg1])>>imm
+    if(x[0:5]=="00111"):           #divide
+        
+        reg1=reg[x[10:13]]
+        reg2=reg[x[13:]]
+        
+        reg_value["R0"]=int(reg_value[reg1]/reg_value[reg2])
+        reg_value["R1"]=reg_value[reg1]%reg_value[reg2]
+
+    if(x[0:5]=="01110"):        #compare
+        
+        reg1=reg[x[10:13]]
+        reg2=reg[x[13:]]
+        
+        if reg_value[reg1]>reg_value[reg2]:
+            reg_value["FLAGS"]=0
+            reg_value["FLAGS"]+=2
+        elif reg_value[reg1]<reg_value[reg2]:
+            reg_value["FLAGS"]=0
+            reg_value["FLAGS"]+=4
+        else:
+            reg_value["FLAGS"]=0
+            reg_value["FLAGS"]+=1
+    
+    if(x[0:5]=="00111"):           #invert
+        
+        reg1=reg[x[10:13]]
+        reg2=reg[x[13:]]
+        
+        reg_value[reg1]= (~reg_value[reg2])
+
+    if(x[0:5]=="00011"):           #mov register
+        
+        reg1=reg[x[10:13]]
+        reg2=reg[x[13:]]
+        
+        reg_value[reg1]= reg_value[reg2]
