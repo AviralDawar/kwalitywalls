@@ -6,8 +6,7 @@ reg={'000':'R0','001':'R1','010':'R2','011':'R3','100':'R4','101':'R5','110':'R6
 reg_value={'R0':0,'R1':0,'R2':0,'R3':0,'R4':0,'R5':0,'R6':0,'FLAGS':0}
 var_dict = {}
 var_count = 0
-for i in range[counter,256]:
-    list_memory.append("0000000000000000")
+
 i=0
 while(i<len(input_list)):
     x=input_list[i]
@@ -129,9 +128,12 @@ while(i<len(input_list)):
         i=int(x[8:],2)
         continue
 
+for i in range(0 , var_count):
+    list_memory.append(var_dict[i]) 
     
-
-    
+#for completing the output_list
+for i in range[counter,256]:
+    list_memory.append("0000000000000000")    
     
      
 
