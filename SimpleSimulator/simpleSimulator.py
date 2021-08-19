@@ -3,6 +3,8 @@ counter=len(input_list)
 list_memory=input_list
 reg={'000':'R0','001':'R1','010':'R2','011':'R3','100':'R4','101':'R5','110':'R6','111':'FLAGS'}
 reg_value={'R0':0,'R1':0,'R2':0,'R3':0,'R4':0,'R5':0,'R6':0,'FLAGS':0}
+var_dict = {}
+var_count = 0
 for i in range[counter,256]:
     list_memory.append("0000000000000000")
 for i in range(0,len(input_list)):
@@ -89,9 +91,8 @@ for i in range(0,len(input_list)):
         
         reg_value[reg1]= (~reg_value[reg2])
 
-    if(x[0:5]=="00011"):           #mov register
-        
-        reg1=reg[x[10:13]]
-        reg2=reg[x[13:]]
-        
-        reg_value[reg1]= reg_value[reg2]
+    if(x[0:5] == "00101"):         #stores data from reg to var
+        reg1=reg[x[5:8]]
+        val = reg_value[reg1] #val = 5
+        var_dict[int(x[8:],2)-len(input_list)] = format(val, '016b')
+        var_count+=1
