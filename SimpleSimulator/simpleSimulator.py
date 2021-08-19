@@ -82,7 +82,7 @@ for i in range(0,len(input_list)):
             reg_value["FLAGS"]=0
             reg_value["FLAGS"]+=1
     
-    if(x[0:5]=="00111"):           #invert
+    if(x[0:5]=="01101"):           #invert
         
         reg1=reg[x[10:13]]
         reg2=reg[x[13:]]
