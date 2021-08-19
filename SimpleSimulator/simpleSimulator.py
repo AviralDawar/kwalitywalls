@@ -130,7 +130,8 @@ while(i<len(input_list)):
 
 for i in range(0 , var_count):
     list_memory.append(var_dict[i]) 
-    
+
+counter+=var_count
 #for completing the output_list
 for i in range[counter,256]:
     list_memory.append("0000000000000000")    
