@@ -7,7 +7,8 @@ var_dict = {}
 var_count = 0
 for i in range[counter,256]:
     list_memory.append("0000000000000000")
-for i in range(0,len(input_list)):
+i=0
+while(i<len(input_list))
     x=input_list[i]
     if(x[0:5]=="00000"):
         reg1=reg[x[7:10]]
@@ -91,8 +92,17 @@ for i in range(0,len(input_list)):
         
         reg_value[reg1]= (~reg_value[reg2])
 
-    if(x[0:5] == "00101"):         #stores data from reg to var
+    if(x[0:5] == "00101"):         #stores data from reg to var      #make for, for storing variable value in list_memory
         reg1=reg[x[5:8]]
         val = reg_value[reg1] #val = 5
         var_dict[int(x[8:],2)-len(input_list)] = format(val, '016b')
         var_count+=1
+
+    if(x[0:5] == "00100"):         #load data from reg to var
+        reg1=reg[x[5:8]]
+        val=var_dict[int(x[8:],2)-len(input_list)]
+        reg_value[reg1]=val
+
+    
+
+    
