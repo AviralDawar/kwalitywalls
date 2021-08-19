@@ -1,3 +1,4 @@
+import sys
 input_list = list(map(str, sys.stdin.readlines()))
 counter=len(input_list)
 list_memory=input_list
@@ -8,7 +9,7 @@ var_count = 0
 for i in range[counter,256]:
     list_memory.append("0000000000000000")
 i=0
-while(i<len(input_list))
+while(i<len(input_list)):
     x=input_list[i]
     if(x[0:5]=="00000"):
         reg1=reg[x[7:10]]
