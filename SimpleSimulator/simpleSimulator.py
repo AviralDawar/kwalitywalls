@@ -167,7 +167,7 @@ while(PC<len(input_list)):
 
 for x in output_list:
     print(" ".join(list(map(str,x))))
-    
+    print( " ".join(list(map(str,x))), file=sys.stderr)
 for i in range(0 , var_count):
     list_memory.append(var_dict[i])
     
