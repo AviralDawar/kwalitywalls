@@ -16,7 +16,7 @@ cycle_counter = 0
 PC=0
 while(PC<len(input_list)):
     cycle_counter += 1 
-    cycle_x[cycle_counter] = cycle_counter
+    cycle_x.append(cycle_counter)
     x=input_list[PC]
     PC_and_regvals=[]
     flag_val=reg_value["FLAGS"]
@@ -138,30 +138,30 @@ while(PC<len(input_list)):
     if(x[0:5] == "00100"):         #load data from reg to var
         reg1=reg[x[5:8]]
         val=var_dict[int(x[8:16],2)-len(input_list)]
-        cycle_ldst[cycle_counter] = int(x[8:16],2)
+        
         reg_value[reg1]=val
 
     if(x[0:5] == "01111"):
-        cycle_y[cycle_counter] = PC
+        #cycle_y[cycle_counter] = PC
         PC=int(x[8:16],2)
         continue
 
     if(x[0:5] == "10000"):
         if(reg_value["FLAGS"]==4):
-            cycle_y[cycle_counter] = PC
+            cycle_y.append(PC)
             PC=int(x[8:16],2)
             continue
 
     if(x[0:5] == "10001"):
         if(reg_value["FLAGS"]==2):
-            cycle_y[cycle_counter] = PC
+            cycle_y.append(PC)
             PC=int(x[8:16],2)
             continue
     
 
     if(x[0:5] == "10010"):
         if(reg_value["FLAGS"]==1):
-            cycle_y[cycle_counter] = PC
+            cycle_y.append(PC)
             PC=int(x[8:16],2)
             continue
 
@@ -176,7 +176,7 @@ while(PC<len(input_list)):
     PC_and_regvals.append(format(reg_value["R6"], '016b'))
     PC_and_regvals.append(format(reg_value["FLAGS"], '016b'))
     output_list.append(PC_and_regvals) 
-    cycle_y[cycle_counter] = PC
+    cycle_y.append(PC)
     PC=PC+1
 
 for x in output_list:
