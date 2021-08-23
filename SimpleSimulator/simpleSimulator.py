@@ -133,7 +133,7 @@ while(PC<len(input_list)):
         reg1=reg[x[5:8]]
         val = reg_value[reg1] #val = 5
         cycle_ldst.pop()
-        cycle_ldst.append(int(x[8:16],2)
+        cycle_ldst.append(int(x[8:16],2))
         var_dict[int(x[8:16],2)-len(input_list)] = format(val, '016b')
         var_count+=1
 
@@ -141,7 +141,7 @@ while(PC<len(input_list)):
         reg1=reg[x[5:8]]
         val=var_dict[int(x[8:16],2)-len(input_list)]
         cycle_ldst.pop()
-        cycle_ldst.append(int(x[8:16],2)
+        cycle_ldst.append(int(x[8:16],2))
         reg_value[reg1]=val
 
     if(x[0:5] == "01111"):
