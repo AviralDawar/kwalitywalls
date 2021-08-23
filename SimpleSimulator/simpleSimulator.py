@@ -181,6 +181,7 @@ for i in range(counter,256):
 for x in list_memory:
     x = x.strip('\n')
     print(x)
+    print(x , file=sys.stderr)
     
 
     
