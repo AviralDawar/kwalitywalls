@@ -17,6 +17,7 @@ PC=0
 while(PC<len(input_list)):
     cycle_counter += 1 
     cycle_x.append(cycle_counter)
+    cycle_ldst.append(0)
     x=input_list[PC]
     PC_and_regvals=[]
     flag_val=reg_value["FLAGS"]
@@ -131,18 +132,21 @@ while(PC<len(input_list)):
     if(x[0:5] == "00101"):         #stores data from reg to var      #make for, for storing variable value in list_memory
         reg1=reg[x[5:8]]
         val = reg_value[reg1] #val = 5
-        cycle_ldst[cycle_counter] = int(x[8:16],2)
+        cycle_ldst.pop()
+        cycle_ldst.append(int(x[8:16],2)
         var_dict[int(x[8:16],2)-len(input_list)] = format(val, '016b')
         var_count+=1
 
     if(x[0:5] == "00100"):         #load data from reg to var
         reg1=reg[x[5:8]]
         val=var_dict[int(x[8:16],2)-len(input_list)]
-        
+        cycle_ldst.pop()
+        cycle_ldst.append(int(x[8:16],2)
         reg_value[reg1]=val
 
     if(x[0:5] == "01111"):
         #cycle_y[cycle_counter] = PC
+        cycle_y.append(PC)
         PC=int(x[8:16],2)
         continue
 
@@ -181,7 +185,7 @@ while(PC<len(input_list)):
 
 for x in output_list:
     print(" ".join(list(map(str,x))))
-    print( " ".join(list(map(str,x))), file=sys.stderr)
+    #print( " ".join(list(map(str,x))), file=sys.stderr)
 for i in range(0 , var_count):
     list_memory.append(var_dict[i])
     
