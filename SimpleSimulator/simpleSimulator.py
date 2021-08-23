@@ -17,7 +17,7 @@ PC=0
 while(PC<len(input_list)):
     cycle_counter += 1 
     cycle_x.append(cycle_counter)
-    cycle_ldst.append(0)
+    cycle_ldst.append(-1)
     x=input_list[PC]
     PC_and_regvals=[]
     flag_val=reg_value["FLAGS"]
@@ -202,7 +202,9 @@ for x in list_memory:
     #print(x , file=sys.stderr)
 
 plt.scatter(cycle_x , cycle_y, c ="blue")
-plt.scatter(cycle_x , cycle_ldst, c ="blue")
+for i in range(0,len(cycle_ldst)):
+    if cycle_ldst[i] != -1:
+        plt.plot(i,cycle_ldst[i],'ro')
 
 plt.show()
     
