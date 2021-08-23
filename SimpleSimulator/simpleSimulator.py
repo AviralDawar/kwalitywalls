@@ -77,7 +77,7 @@ while(PC<len(input_list)):
         imm=int(x[8:16],2)
         reg_value[reg1]=imm
 
-    if(x[0:5]=="000011"):
+    if(x[0:5]=="00011"):
         #mov_imm
         reg1=reg[x[10:13]]
         reg2=reg[x[13:16]]
