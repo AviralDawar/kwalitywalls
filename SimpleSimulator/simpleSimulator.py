@@ -1,4 +1,5 @@
 import sys
+import matplotlib.pyplot as plt
 input_list = list(map(str, sys.stdin.readlines()))
 counter=len(input_list)
 list_memory=input_list
@@ -7,9 +8,15 @@ reg_value={'R0':0,'R1':0,'R2':0,'R3':0,'R4':0,'R5':0,'R6':0,'FLAGS':0}
 output_list=[]
 var_dict = {}
 var_count = 0
+cycle_x = []
+cycle_y = []
+cycle_ldst = []
+cycle_counter = 0
 
 PC=0
 while(PC<len(input_list)):
+    cycle_counter += 1 
+    cycle_x[cycle_counter] = cycle_counter
     x=input_list[PC]
     PC_and_regvals=[]
     flag_val=reg_value["FLAGS"]
@@ -124,31 +131,37 @@ while(PC<len(input_list)):
     if(x[0:5] == "00101"):         #stores data from reg to var      #make for, for storing variable value in list_memory
         reg1=reg[x[5:8]]
         val = reg_value[reg1] #val = 5
+        cycle_ldst[cycle_counter] = int(x[8:16],2)
         var_dict[int(x[8:16],2)-len(input_list)] = format(val, '016b')
         var_count+=1
 
     if(x[0:5] == "00100"):         #load data from reg to var
         reg1=reg[x[5:8]]
         val=var_dict[int(x[8:16],2)-len(input_list)]
+        cycle_ldst[cycle_counter] = int(x[8:16],2)
         reg_value[reg1]=val
 
     if(x[0:5] == "01111"):
+        cycle_y[cycle_counter] = PC
         PC=int(x[8:16],2)
         continue
 
     if(x[0:5] == "10000"):
         if(reg_value["FLAGS"]==4):
+            cycle_y[cycle_counter] = PC
             PC=int(x[8:16],2)
             continue
 
     if(x[0:5] == "10001"):
         if(reg_value["FLAGS"]==2):
+            cycle_y[cycle_counter] = PC
             PC=int(x[8:16],2)
             continue
     
 
     if(x[0:5] == "10010"):
         if(reg_value["FLAGS"]==1):
+            cycle_y[cycle_counter] = PC
             PC=int(x[8:16],2)
             continue
 
@@ -163,6 +176,7 @@ while(PC<len(input_list)):
     PC_and_regvals.append(format(reg_value["R6"], '016b'))
     PC_and_regvals.append(format(reg_value["FLAGS"], '016b'))
     output_list.append(PC_and_regvals) 
+    cycle_y[cycle_counter] = PC
     PC=PC+1
 
 for x in output_list:
@@ -181,7 +195,16 @@ for i in range(counter,256):
 for x in list_memory:
     x = x.strip('\n')
     print(x)
-    print(x , file=sys.stderr)
-    
+    #print(x , file=sys.stderr)
 
+plt.scatter(cycle_x , cycle_y, c ="blue")
+plt.scatter(cycle_ldst , cycle_y, c ="blue")
+
+plt.show()
+    
+#first make a list for all the x- co ordinates of the graph , in that graph whenever an instruction is being executed
+#the cycle_counter increases by 1
+
+#for the y axis make another list in which you store the program counter
+#make another list for handling ld and st functions
     
