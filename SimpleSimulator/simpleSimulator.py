@@ -202,7 +202,7 @@ for x in list_memory:
     #print(x , file=sys.stderr)
 
 plt.scatter(cycle_x , cycle_y, c ="blue")
-plt.scatter(cycle_ldst , cycle_y, c ="blue")
+plt.scatter(cycle_x , cycle_ldst, c ="blue")
 
 plt.show()
     
