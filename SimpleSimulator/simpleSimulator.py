@@ -12,6 +12,8 @@ PC=0
 while(PC<len(input_list)):
     x=input_list[PC]
     PC_and_regvals=[]
+    flag_val=reg_value["FLAGS"]
+    reg_value["FLAGS"]=0
     if(x[0:5]=="00000"):
         #add
         reg1=reg[x[7:10]]
@@ -21,7 +23,6 @@ while(PC<len(input_list)):
     
     
         if(reg_value[reg1]>=256):
-            reg_value["FLAGS"]=0
             reg_value["FLAGS"]+=8
         
    
@@ -34,7 +35,6 @@ while(PC<len(input_list)):
         
         
         if(reg_value[reg1]<0):
-            reg_value["FLAGS"]=0
             reg_value["FLAGS"]+=8
             reg_value[reg1]=0
             
@@ -47,7 +47,6 @@ while(PC<len(input_list)):
         
         
         if(reg_value[reg1]<0 or reg_value[reg1]>256 ):
-            reg_value["FLAGS"]=0
             reg_value["FLAGS"]+=8
 
     if(x[0:5]=="01010"):
@@ -78,10 +77,13 @@ while(PC<len(input_list)):
         reg_value[reg1]=imm
 
     if(x[0:5]=="00011"):
-        #mov_imm
+        #mov_reg
         reg1=reg[x[10:13]]
         reg2=reg[x[13:16]]
-        reg_value[reg1]=reg_value[reg2]
+        if(reg2=="FLAGS"):
+            reg_value[reg1]=flag_val
+        else:
+            reg_value[reg1]=reg_value[reg2]
         
     if(x[0:5]=="01001"):
         #left_shift
@@ -106,7 +108,6 @@ while(PC<len(input_list)):
         
         reg1=reg[x[10:13]]
         reg2=reg[x[13:16]]
-        reg_value["FLAGS"]=0
         if reg_value[reg1]>reg_value[reg2]:
             reg_value["FLAGS"]+=2
         elif reg_value[reg1]<reg_value[reg2]:
@@ -153,21 +154,16 @@ while(PC<len(input_list)):
 
     PC_bin=format(PC, '08b')
     PC_and_regvals.append(PC_bin)
-    PC_and_regvals.append(format(reg_value["R0"], '08b'))
-    PC_and_regvals.append(format(reg_value["R1"], '08b'))
-    PC_and_regvals.append(format(reg_value["R2"], '08b'))
-    PC_and_regvals.append(format(reg_value["R3"], '08b'))
-    PC_and_regvals.append(format(reg_value["R4"], '08b'))
-    PC_and_regvals.append(format(reg_value["R5"], '08b'))
-    PC_and_regvals.append(format(reg_value["R6"], '08b'))
-    PC_and_regvals.append(format(reg_value["FLAGS"], '08b'))
+    PC_and_regvals.append(format(reg_value["R0"], '016b'))
+    PC_and_regvals.append(format(reg_value["R1"], '016b'))
+    PC_and_regvals.append(format(reg_value["R2"], '016b'))
+    PC_and_regvals.append(format(reg_value["R3"], '016b'))
+    PC_and_regvals.append(format(reg_value["R4"], '016b'))
+    PC_and_regvals.append(format(reg_value["R5"], '016b'))
+    PC_and_regvals.append(format(reg_value["R6"], '016b'))
+    PC_and_regvals.append(format(reg_value["FLAGS"], '016b'))
     output_list.append(PC_and_regvals) 
     PC=PC+1
-
-
-    
-
-    
 
 for i in range(0 , var_count):
     list_memory.append(var_dict[i]) 
