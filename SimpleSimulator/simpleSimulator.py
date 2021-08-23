@@ -14,9 +14,9 @@ cycle_ldst = []
 cycle_counter = 0
 
 PC=0
-while(PC<len(input_list)):
-    cycle_counter += 1 
+while(PC<len(input_list)): 
     cycle_x.append(cycle_counter)
+    cycle_counter += 1
     cycle_ldst.append(-1)
     x=input_list[PC]
     PC_and_regvals=[]
