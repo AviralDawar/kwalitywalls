@@ -165,16 +165,22 @@ while(PC<len(input_list)):
     output_list.append(PC_and_regvals) 
     PC=PC+1
 
+for x in output_list:
+    print(" ".join(list(map(str,x))))
+    
 for i in range(0 , var_count):
-    list_memory.append(var_dict[i]) 
+    list_memory.append(var_dict[i])
+    
+counter+=var_count
     
 #for completing the output_list
-for i in range[counter,256]:
-    list_memory.append("0000000000000000")    
+for i in range(counter,256):
+    list_memory.append("0000000000000000")  
+    
 
-
-     
-
+for x in list_memory:
+    x = x.strip('\n')
+    print(x)
     
 
     
