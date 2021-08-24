@@ -219,7 +219,7 @@ for x in list_memory:
 plt.scatter(cycle_x , cycle_y, c ="blue")
 for i in range(0,len(cycle_ldst)):
     if cycle_ldst[i] != -1:
-        plt.plot(i,cycle_ldst[i],'ro')
+        plt.plot(i,cycle_ldst[i],'bo')
 
 plt.show()
     
