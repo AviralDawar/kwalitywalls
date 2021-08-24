@@ -52,7 +52,7 @@ def right_shift(registor,val):
 
 def left_shift(registor,val):
     s=""
-    s+="01000"
+    s+="01001"
     s+=reg[registor]
     bin_ans=format(val, '08b')
     s+=bin_ans
@@ -102,8 +102,9 @@ def Halt():
     return(s)
 
 #FOR TAKING THE INPUT
-input_list = list(map(str, sys.stdin.readlines())) #l=[intructions as strings]
-
+#input_list = list(map(str, sys.stdin.readlines())) #l=[intructions as strings]
+f = open('sys.txt', mode='r+')
+input_list = f.readlines()
 #THE WHILE LOOP BELOW IS FOR REMOVING ALL THE SPACES FROM THE INPUT
 i=0
 while(i<len(input_list)):
