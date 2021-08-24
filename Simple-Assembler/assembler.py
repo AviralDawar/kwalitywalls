@@ -102,9 +102,9 @@ def Halt():
     return(s)
 
 #FOR TAKING THE INPUT
-#input_list = list(map(str, sys.stdin.readlines())) #l=[intructions as strings]
-f = open('sys.txt', mode='r+')
-input_list = f.readlines()
+input_list = list(map(str, sys.stdin.readlines())) #l=[intructions as strings]
+#if = open('sys.txt', mode='r+')
+#input_list = f.readlines()
 #THE WHILE LOOP BELOW IS FOR REMOVING ALL THE SPACES FROM THE INPUT
 i=0
 while(i<len(input_list)):
