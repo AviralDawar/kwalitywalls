@@ -1,8 +1,8 @@
 import sys
 import matplotlib.pyplot as plt
-#input_list = list(map(str, sys.stdin.readlines()))
-f = open('sys.txt', mode='r+')
-input_list = f.readlines()
+input_list = list(map(str, sys.stdin.readlines()))
+# f = open('sys.txt', mode='r+')
+# input_list = f.readlines()
 counter=len(input_list)
 list_memory=input_list
 reg={'000':'R0','001':'R1','010':'R2','011':'R3','100':'R4','101':'R5','110':'R6','111':'FLAGS'}
