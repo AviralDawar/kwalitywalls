@@ -1,6 +1,8 @@
 import sys
 import matplotlib.pyplot as plt
-input_list = list(map(str, sys.stdin.readlines()))
+#input_list = list(map(str, sys.stdin.readlines()))
+f = open('sys.txt', mode='r+')
+input_list = f.readlines()
 counter=len(input_list)
 list_memory=input_list
 reg={'000':'R0','001':'R1','010':'R2','011':'R3','100':'R4','101':'R5','110':'R6','111':'FLAGS'}
@@ -13,8 +15,10 @@ cycle_y = []
 cycle_ldst = []
 cycle_counter = 0
 
+
 PC=0
-while(PC<len(input_list)): 
+while(PC<len(input_list)):
+    jump_flag=False
     cycle_x.append(cycle_counter)
     cycle_counter += 1
     cycle_ldst.append(-1)
@@ -30,9 +34,9 @@ while(PC<len(input_list)):
         reg_value[reg1]=reg_value[reg2]+reg_value[reg3]
     
     
-        if(reg_value[reg1]>=256):
+        if(reg_value[reg1]>=65536):
             reg_value["FLAGS"]+=8
-        
+            reg_value[reg1]= reg_value[reg1]%65536
    
     if(x[0:5]=="00001"):
         #subtract
@@ -54,8 +58,9 @@ while(PC<len(input_list)):
         reg_value[reg1]=reg_value[reg2]*reg_value[reg3]
         
         
-        if(reg_value[reg1]<0 or reg_value[reg1]>256 ):
+        if(reg_value[reg1]>=65536 ):
             reg_value["FLAGS"]+=8
+            reg_value[reg1]= reg_value[reg1]%65536
 
     if(x[0:5]=="01010"):
         #xor
@@ -98,17 +103,19 @@ while(PC<len(input_list)):
         reg1=reg[x[5:8]]
         imm=int(x[8:16],2)
         reg_value[reg1]= int(reg_value[reg1])<<imm
-
+        if(reg_value[reg1]>=65536):
+            reg_value["FLAGS"]+=8
+            reg_value[reg1]= reg_value[reg1]%65536
+            
     if(x[0:5]=="01000"):
         #right_shift
         reg1=reg[x[5:8]]
         imm=int(x[8:16],2)
         reg_value[reg1]= int(reg_value[reg1])>>imm
-    if(x[0:5]=="00111"):           #divide
         
+    if(x[0:5]=="00111"):           #divide
         reg1=reg[x[10:13]]
         reg2=reg[x[13:16]]
-        
         reg_value["R0"]=int(reg_value[reg1]/reg_value[reg2])
         reg_value["R1"]=reg_value[reg1]%reg_value[reg2]
 
@@ -123,11 +130,18 @@ while(PC<len(input_list)):
         else:
             reg_value["FLAGS"]+=1
     
-    if(x[0:5]=="01101"):           #invert    #doubt_on_negative
-        
+    if(x[0:5]=="01101"):           #invert
         reg1=reg[x[10:13]]
         reg2=reg[x[13:16]]
-        reg_value[reg1]= (~reg_value[reg2])
+        val=format(reg_value[reg2], '016b')
+        val_invert=""
+        for i in val:
+            if(i=="0"):
+                i=1
+            else:
+                i=0
+            val_invert+=str(i)
+        reg_value[reg1]=int(val_invert,2)
 
     if(x[0:5] == "00101"):         #stores data from reg to var      #make for, for storing variable value in list_memory
         reg1=reg[x[5:8]]
@@ -139,7 +153,7 @@ while(PC<len(input_list)):
 
     if(x[0:5] == "00100"):         #load data from reg to var
         reg1=reg[x[5:8]]
-        val=var_dict[int(x[8:16],2)-len(input_list)]
+        val=int(var_dict[int(x[8:16],2)-len(input_list)],2)
         cycle_ldst.pop()
         cycle_ldst.append(int(x[8:16],2))
         reg_value[reg1]=val
@@ -147,27 +161,24 @@ while(PC<len(input_list)):
     if(x[0:5] == "01111"):
         #cycle_y[cycle_counter] = PC
         cycle_y.append(PC)
-        PC=int(x[8:16],2)
-        continue
+        jump_flag=True
 
     if(x[0:5] == "10000"):
-        if(reg_value["FLAGS"]==4):
+        if(flag_val==4):
             cycle_y.append(PC)
-            PC=int(x[8:16],2)
-            continue
+            jump_flag=True
+            
 
     if(x[0:5] == "10001"):
-        if(reg_value["FLAGS"]==2):
+        if(flag_val==2):
             cycle_y.append(PC)
-            PC=int(x[8:16],2)
-            continue
+            jump_flag=True
     
 
     if(x[0:5] == "10010"):
-        if(reg_value["FLAGS"]==1):
+        if(flag_val==1):
             cycle_y.append(PC)
-            PC=int(x[8:16],2)
-            continue
+            jump_flag=True
 
     PC_bin=format(PC, '08b')
     PC_and_regvals.append(PC_bin)
@@ -179,8 +190,12 @@ while(PC<len(input_list)):
     PC_and_regvals.append(format(reg_value["R5"], '016b'))
     PC_and_regvals.append(format(reg_value["R6"], '016b'))
     PC_and_regvals.append(format(reg_value["FLAGS"], '016b'))
-    output_list.append(PC_and_regvals) 
-    cycle_y.append(PC)
+    output_list.append(PC_and_regvals)
+    if(jump_flag==False):
+        cycle_y.append(PC)
+    if(jump_flag):
+        PC=int(x[8:16],2)
+        continue
     PC=PC+1
 
 for x in output_list:
@@ -213,4 +228,3 @@ plt.show()
 
 #for the y axis make another list in which you store the program counter
 #make another list for handling ld and st functions
-    
