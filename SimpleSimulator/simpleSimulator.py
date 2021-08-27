@@ -146,14 +146,23 @@ while(PC<len(input_list)):
     if(x[0:5] == "00101"):         #stores data from reg to var      #make for, for storing variable value in list_memory
         reg1=reg[x[5:8]]
         val = reg_value[reg1] #val = 5
+        if(int(x[8:16],2)-len(input_list) in var_dict):
+            var_dict[int(x[8:16],2)-len(input_list)] = format(val, '016b')
+        else:
+            var_dict[int(x[8:16],2)-len(input_list)] = format(val, '016b')
+            var_count+=1
         cycle_ldst.pop()
         cycle_ldst.append(int(x[8:16],2))
-        var_dict[int(x[8:16],2)-len(input_list)] = format(val, '016b')
-        var_count+=1
-
+       
+    
     if(x[0:5] == "00100"):         #load data from reg to var
         reg1=reg[x[5:8]]
-        val=int(var_dict[int(x[8:16],2)-len(input_list)],2)
+        if(int(x[8:16],2)-len(input_list) in var_dict):
+            val=int(var_dict[int(x[8:16],2)-len(input_list)],2)
+        else:
+            var_dict[int(x[8:16],2)-len(input_list)] = format(0, '016b')
+            var_count+=1
+            val=0
         cycle_ldst.pop()
         cycle_ldst.append(int(x[8:16],2))
         reg_value[reg1]=val
