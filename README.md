@@ -1,6 +1,8 @@
 # kwalitywalls
 
 # CO project
+Custom Assembler that prints the Byte Code of the input instruction.
+Simulator takes that byte code and prints the corresponding output to the input instruction entered.
 
 ## Adding code
 * Add the assembler code in the `Simple-Assembler` directory. Add the commands to execute the assembler in `Simple-Assembler/run`.
